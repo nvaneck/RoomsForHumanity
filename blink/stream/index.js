@@ -27,7 +27,8 @@ const certOptions = {
 
 let app = express();
 let httpsServer = https.Server(certOptions, app);
-httpsServer.listen(HTTPS_PORT);
+//httpsServer.listen(HTTPS_PORT);
+httpsServer.listen(8080);
 let io = socketIO.listen(httpsServer);
 
 // let fileServer = new(nodeStatic.Server)();
