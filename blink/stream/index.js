@@ -2,7 +2,7 @@
 // const MAIN_SERVER_ADDR = "http://localhost:3000";
 // const STREAM_SERVER_ADDR = "https://localhost:4000";
 const HTTPS_PORT = 443;
-const MAIN_SERVER_ADDR = "http://chat.roomsforhumanity.org:8080";
+const MAIN_SERVER_ADDR = "http://roomsforhumanity.org:8080";
 const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org";
 
 const express = require('express');
