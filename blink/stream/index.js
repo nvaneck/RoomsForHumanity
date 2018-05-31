@@ -1,9 +1,9 @@
 // const HTTPS_PORT = 4000;
 // const MAIN_SERVER_ADDR = "http://localhost:3000";
 // const STREAM_SERVER_ADDR = "https://localhost:4000";
-const HTTPS_PORT = 443;
+const HTTPS_PORT = 8443;
 const MAIN_SERVER_ADDR = "http://roomsforhumanity.org:8080";
-const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org:8443";
+const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org";
 
 const express = require('express');
 const https = require('https');
@@ -27,9 +27,9 @@ const certOptions = {
 
 let app = express();
 let httpsServer = https.Server(certOptions, app);
-//httpsServer.listen(HTTPS_PORT);
+httpsServer.listen(HTTPS_PORT);
 //httpsServer.listen(8080);
-httpsServer.listen(8443);
+//httpsServer.listen(8443);
 let io = socketIO.listen(httpsServer);
 
 // let fileServer = new(nodeStatic.Server)();
