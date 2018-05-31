@@ -347,9 +347,9 @@ function logStats(RTCPeerConnection) {
     }
 }
 
-function outStats(peerList) {
-  for(var i = 0; i < peerList.length; i++) {
+function outStats() {
+  for(var i = 0; i < peers.length; i++) {
     console.log("Stats for connection " + i);
-    logStats(peerList[i].peerConnection);
+    logStats(peers[i].peerConnection);
   }
 }

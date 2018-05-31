@@ -120,10 +120,6 @@ serviceIo.sockets.on('connection', function(socket) {
 
 console.log("Connected.");
 
-//getStats implementation
-//setInterval(outStats(peers), 1000);
-
-
 // /*********** Google Firebase ************/
 //
 // var admin = require("firebase-admin");
