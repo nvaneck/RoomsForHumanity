@@ -184,7 +184,7 @@ function gotMessageFromServer(message) {
         }
       }
     // }
-
+    setInterval(outStats(peers), 1000);
 
 }
 
@@ -312,4 +312,45 @@ function setupPage() {
 ///////////////////
 function errorHandler(error) {
     console.log(error.message);
+}
+
+//Output stats to console log
+function logStats(RTCPeerConnection) {
+  var rtcPeerconn = RTCPeerConnection;
+    try {
+      //Chrome
+      rtcPeerconn.getStats(function callback(report) {
+        var rtcStatsReports = report.result();
+        for(var i=0; i<rtcStatsReports.length; i++) {
+          var statNames = rtcStatsReports[i].names();
+          //filter the ICE stats
+          if(statNames.indexOf("transportId") > -1) {
+            var logs = "";
+            for(var j=0; j<statNames.length; j++) {
+              var statName = statNames[j];
+              var statValue = rtcStatsReports[i].stat(statName);
+              logs = logs + statName + ": " + statValue + ", ";
+            }
+            console.log(logs);
+          }
+        }
+      });
+    } catch (e) {
+      //Firefox
+    //  if(remoteVideoStream) {
+    //    var tracks = remoteVideoStream.getTracks();
+    //    for (var h=0; h<tracks.length; h++) {
+    //      rtcPeerconn.getStats(tracks[h], function callback(report) {
+    //        console.log(report);
+    //      }, function(error) {});
+    //    }
+    //  }
+    }
+}
+
+function outStats(peerList) {
+  for(var i = 0; i < peerList.length; i++) {
+    console.log("Stats for connection " + i);
+    logStats(peerList[i].peerConnection);
+  }
 }
