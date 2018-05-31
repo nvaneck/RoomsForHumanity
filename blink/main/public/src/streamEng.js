@@ -144,8 +144,6 @@ streamEng.subscribe = function() {
         streamEng.onSubscribeDone();
     }
 
-    setInterval(outStats(peers), 1000);
-
 }
 
 
