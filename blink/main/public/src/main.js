@@ -300,7 +300,7 @@ const ECE_faculty = {
     'Vrushali': {
         name: 'Vrushali Gaikwad',
         email: 'vrushaligaikwad9@gmail.com',
-        img: 'vrushali.jpg'
+        img: 'blink.png'
     },
     'Yu': {
         name: 'Yu Zhang',
