@@ -25,6 +25,10 @@ var constraints = {
   audio: true
 };
 
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://52.15.79.228:27017/RoomsStats";
+var statsIteration = 1;
+
 ///////////////////////
 //// StreamCast Eng Stuff
 
@@ -316,6 +320,14 @@ function errorHandler(error) {
 //Output stats to console log
 function logStats(RTCPeerConnection) {
   var rtcPeerconn = RTCPeerConnection;
+  var d = new Date();
+  var time = d.getTime();
+  MongoClient.connect(url, function(err, db){
+    if(err) throw err;
+    var dbo = db.db("RoomsStats");
+    dbo.createCollection("" + statsIteration + time, function(err, res){
+      if(err) throw err;
+    });
     try {
       //Chrome
       rtcPeerconn.getStats(function callback(report) {
@@ -330,10 +342,11 @@ function logStats(RTCPeerConnection) {
               var statValue = rtcStatsReports[i].stat(statName);
               logs = logs + statName + ": " + statValue + ", ";
             }
-            console.log(logs);
+              uploadStats(logs, dbo);
+              console.log(logs);
+            }
           }
         }
-      });
     } catch (e) {
       //Firefox
     //  if(remoteVideoStream) {
@@ -345,6 +358,8 @@ function logStats(RTCPeerConnection) {
     //    }
     //  }
     }
+    db.close();
+  });
 }
 
 function outStats() {
@@ -352,4 +367,13 @@ function outStats() {
     console.log("Stats for connection " + i);
     logStats(peers[i].peerConnection);
   }
+}
+
+function uploadStats(logs, dbo) {
+  var networkStats = {iteration: "" + statsIteration, data: logs};
+  dbo.collection("" + statsIteration + time).insertOne(networkStats, function(err,res) {
+    if(err) throw err;
+    console.log("Document " + j + " has been uploaded for iteration " + statsIteration);
+  });
+  statsIteration = statsIteration + 1;
 }
