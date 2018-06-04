@@ -4,11 +4,13 @@
 const HTTPS_PORT = 8443;
 const MAIN_SERVER_ADDR = "http://roomsforhumanity.org:8080";
 const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org";
+const url = "mongodb://52.15.79.228:27017/RoomsStats";
 
 const express = require('express');
 const https = require('https');
 const socketIO = require('socket.io');
 const fs = require('fs');
+const MongoClient = require('mongodb').MongoClient;
 
 /******** OBJECTS ***********/
 
@@ -57,6 +59,14 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('subscribe', function(userID, roomName) {
         onJoin(userID, socket, roomName, false);
+    });
+
+    socket.on('create collection', function(name) {
+        makeCollection(name);
+    });
+
+    socket.on('stats data', function(logs, iteration, name) {
+        uploadStats(logs, iteration, name);
     });
 
 });
@@ -307,3 +317,28 @@ function setupMongoCollection() {
 //
 //     return JSON.stringify(newStreamRoom);
 // }
+
+function uploadStats(logs, statsIteration, collectionName) {
+  MongoClient.connect(url, function(err, db){
+    if(err) throw err;
+    var dbo = db.db("RoomsStats");
+    var networkStats = {iteration: "" + statsIteration, data: logs};
+    dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
+        if(err) throw err;
+        console.log("Document " + j + " has been uploaded for iteration " + statsIteration);
+        db.close();
+    });
+  });
+}
+
+function makeCollection(name) {
+    MongoClient.connect(url, function(err, db) {
+        if(err) throw err;
+        var dbo = db.db("RoomsStats");
+        dbo.createCollection(name, function(err, res) {
+            if(err) throw err;
+            console.log("Collection created");
+            db.close();
+        });
+    });
+}

@@ -25,8 +25,8 @@ var constraints = {
   audio: true
 };
 
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://52.15.79.228:27017/RoomsStats";
+//var MongoClient = require('mongodb').MongoClient;
+//var url = "mongodb://52.15.79.228:27017/RoomsStats";
 var statsIteration = 1;
 
 ///////////////////////
@@ -322,12 +322,13 @@ function logStats(RTCPeerConnection) {
   var rtcPeerconn = RTCPeerConnection;
   var d = new Date();
   var time = d.getTime();
-  MongoClient.connect(url, function(err, db){
-    if(err) throw err;
-    var dbo = db.db("RoomsStats");
-    dbo.createCollection("" + statsIteration + time, function(err, res){
-      if(err) throw err;
-    });
+  streamEng.socket.emit('createCollection', time);
+//  MongoClient.connect(url, function(err, db){
+//    if(err) throw err;
+//    var dbo = db.db("RoomsStats");
+//    dbo.createCollection("" + statsIteration + time, function(err, res){
+//      if(err) throw err;
+//    });
     try {
       //Chrome
       rtcPeerconn.getStats(function callback(report) {
@@ -342,11 +343,13 @@ function logStats(RTCPeerConnection) {
               var statValue = rtcStatsReports[i].stat(statName);
               logs = logs + statName + ": " + statValue + ", ";
             }
-              uploadStats(logs, dbo);
+//              uploadStats(logs, dbo);
+              streamEng.socket.emit('stats data', logs, statsIteration, time);
               console.log(logs);
+              statsIteration = statsIteration + 1;
             }
           }
-      });
+//      });
     } catch (e) {
       //Firefox
     //  if(remoteVideoStream) {
@@ -358,8 +361,8 @@ function logStats(RTCPeerConnection) {
     //    }
     //  }
     }
-    db.close();
-  });
+//    db.close();
+//  });
 }
 
 function outStats() {
@@ -369,11 +372,11 @@ function outStats() {
   }
 }
 
-function uploadStats(logs, dbo) {
-  var networkStats = {iteration: "" + statsIteration, data: logs};
-  dbo.collection("" + statsIteration + time).insertOne(networkStats, function(err,res) {
-    if(err) throw err;
-    console.log("Document " + j + " has been uploaded for iteration " + statsIteration);
-  });
-  statsIteration = statsIteration + 1;
-}
+//function uploadStats(logs, dbo) {
+//  var networkStats = {iteration: "" + statsIteration, data: logs};
+//  dbo.collection("" + statsIteration + time).insertOne(networkStats, function(err,res) {
+//    if(err) throw err;
+//    console.log("Document " + j + " has been uploaded for iteration " + statsIteration);
+//  });
+//  statsIteration = statsIteration + 1;
+//}
