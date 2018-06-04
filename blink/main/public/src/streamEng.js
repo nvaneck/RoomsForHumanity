@@ -346,7 +346,7 @@ function logStats(RTCPeerConnection) {
               console.log(logs);
             }
           }
-        }
+      });
     } catch (e) {
       //Firefox
     //  if(remoteVideoStream) {
