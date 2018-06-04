@@ -349,7 +349,7 @@ function logStats(RTCPeerConnection) {
               statsIteration = statsIteration + 1;
             }
           }
-//      });
+      });
     } catch (e) {
       //Firefox
     //  if(remoteVideoStream) {
