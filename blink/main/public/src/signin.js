@@ -9,6 +9,10 @@ var objs = {
     roomNameInput: undefined
 };
 
+//objs.roomButton = $('#roomButton');
+//objs.roomButton.on('click', setUptRoom);
+//
+
 $(document).ready(function() {
     console.log("Ready.");
 
