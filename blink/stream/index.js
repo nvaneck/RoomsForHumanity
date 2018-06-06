@@ -4,7 +4,8 @@
 const HTTPS_PORT = 8443;
 const MAIN_SERVER_ADDR = "http://roomsforhumanity.org:8080";
 const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org";
-const url = "mongodb://stream:enter1234@52.15.79.228:27017/RoomsStats";
+//const url = "mongodb://stream:enter1234@52.15.79.228:27017/RoomsStats";
+const url = "mongodb://localhost:27017"
 
 const express = require('express');
 const https = require('https');
