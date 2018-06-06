@@ -324,12 +324,6 @@ function logStats(RTCPeerConnection) {
   var time = d.getTime();
   console.log('Creating MongoDB collection');
   streamEng.socket.emit('create collection', '_' + time.toString());
-//  MongoClient.connect(url, function(err, db){
-//    if(err) throw err;
-//    var dbo = db.db("RoomsStats");
-//    dbo.createCollection("" + statsIteration + time, function(err, res){
-//      if(err) throw err;
-//    });
     try {
       //Chrome
       rtcPeerconn.getStats(function callback(report) {
@@ -344,7 +338,6 @@ function logStats(RTCPeerConnection) {
               var statValue = rtcStatsReports[i].stat(statName);
               logs = logs + statName + ": " + statValue + ", ";
             }
-//              uploadStats(logs, dbo);
               console.log('Creating document ' + i + ' of 4');
               streamEng.socket.emit('stats data', logs, statsIteration, time.toString());
               console.log(logs);
@@ -373,12 +366,3 @@ function outStats() {
     logStats(peers[i].peerConnection);
   }
 }
-
-//function uploadStats(logs, dbo) {
-//  var networkStats = {iteration: "" + statsIteration, data: logs};
-//  dbo.collection("" + statsIteration + time).insertOne(networkStats, function(err,res) {
-//    if(err) throw err;
-//    console.log("Document " + j + " has been uploaded for iteration " + statsIteration);
-//  });
-//  statsIteration = statsIteration + 1;
-//}

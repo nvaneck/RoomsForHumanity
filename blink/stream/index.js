@@ -326,7 +326,7 @@ function uploadStats(logs, statsIteration, collectionName) {
     var networkStats = {iteration: "" + statsIteration, data: logs};
     dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
         if(err) throw err;
-        console.log("Document " + j + " has been uploaded for iteration " + statsIteration);
+        console.log("Document has been uploaded for iteration " + statsIteration);
         db.close();
     });
   });
