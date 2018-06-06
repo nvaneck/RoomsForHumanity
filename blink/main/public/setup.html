@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Blink Chat</title>
+    <title>Rooms For Humanity</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/chat.css">
@@ -12,27 +12,55 @@
 <body class="">
 
 <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand mb-0 h1" href="#">blink Chat</a>
+    <a class="navbar-brand mb-0 h1" href="#">Rooms for Humanity</a>
 </nav>
 
 <br>
 
-<div class="container center-items center-vertical">
+<div class="container left-items center-vertical">
+    <div class="row">
+    <div class="col-sm-6">
     <div class="jumbotron">
-        <h1 class="display-4">Lets Get Started</h1>
-        <p class="lead">Enter a name to create a new room or join an existing one.</p>
+        <h1 class="display-4">Join a Room</h1>
+        <p class="lead">Enter a name and pin to join.</p>
         <hr class="my-4">
         <!--<p>Join or Create a group chat by giving it a name below. Simple as that.</p>-->
 
         <div class="center-items">
             <div class="input-group input-group-lg mb-3 sm-text-box">
-                <input type="text" id="roomNameInput" class="form-control" placeholder="">
+                <input type="text" id="roomNameInput" class="form-control" placeholder="Room Name">
+            </div>
+        </div>
+        <div class="center-items">
+            <div class="input-group input-group-lg mb-3 sm-text-box">
+                <input type="text" id="pinInput" class="form-control" placeholder="PIN">
             </div>
         </div>
         <div class="center-items">
             <button id="goButton" class="btn btn-primary btn-lg center" type="button">Go Live</button>
         </div>
 
+    </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="jumbotron">
+        <h1 class="display-4">Create a Room</h1>
+        <p class="lead">Enter a name to create a new room.</p>
+        <hr class="my-4">
+        <!--<p>Join or Create a group chat by giving it a name below. Simple as that.</p>-->
+
+        <div class="center-items">
+            <div class="input-group input-group-lg mb-3 sm-text-box">
+                <input type="text" id="roomNameInput" class="form-control" placeholder="Room Name">
+            </div>
+        </div>
+        <div class="center-items">
+            <button id="createButton" class="btn btn-primary btn-lg center" type="button">Go Live</button>
+        </div>
+
+    </div>
+    </div>
     </div>
 </div>
 

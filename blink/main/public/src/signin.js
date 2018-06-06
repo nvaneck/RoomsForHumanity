@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     objs.roomNameInput = $('#roomNameInput')[0];
 
-    typeAnimations(options, document.getElementById('roomNameInput'));
+    //typeAnimations(options, document.getElementById('roomNameInput'));
     // printLetter("ECE Meeting", document.getElementById('roomNameInput'), 0);
 });
 
