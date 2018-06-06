@@ -339,7 +339,7 @@ function logStats(RTCPeerConnection) {
               logs = logs + statName + ": " + statValue + ", ";
             }
               console.log('Creating document ' + i + ' of 4');
-              streamEng.socket.emit('stats data', logs, statsIteration, time.toString());
+              streamEng.socket.emit('stats data', logs, statsIteration, '_' + time.toString());
               console.log(logs);
               statsIteration = statsIteration + 1;
             }
