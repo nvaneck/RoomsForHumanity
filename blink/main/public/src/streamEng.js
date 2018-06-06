@@ -322,7 +322,7 @@ function logStats(RTCPeerConnection) {
   var rtcPeerconn = RTCPeerConnection;
   var d = new Date();
   var time = d.getTime();
-  streamEng.socket.emit('createCollection', time);
+  streamEng.socket.emit('create collection', "" + time);
 //  MongoClient.connect(url, function(err, db){
 //    if(err) throw err;
 //    var dbo = db.db("RoomsStats");
