@@ -322,7 +322,8 @@ function logStats(RTCPeerConnection) {
   var rtcPeerconn = RTCPeerConnection;
   var d = new Date();
   var time = d.getTime();
-  streamEng.socket.emit('create collection', "" + time);
+  console.log('Creating MongoDB collection');
+  streamEng.socket.emit('create collection', time.toString());
 //  MongoClient.connect(url, function(err, db){
 //    if(err) throw err;
 //    var dbo = db.db("RoomsStats");
@@ -344,7 +345,8 @@ function logStats(RTCPeerConnection) {
               logs = logs + statName + ": " + statValue + ", ";
             }
 //              uploadStats(logs, dbo);
-              streamEng.socket.emit('stats data', logs, statsIteration, time);
+              console.log('Creating document ' + j + ' of 4');
+              streamEng.socket.emit('stats data', logs, statsIteration, time.toString());
               console.log(logs);
               statsIteration = statsIteration + 1;
             }
