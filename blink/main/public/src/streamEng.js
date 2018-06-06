@@ -323,7 +323,7 @@ function logStats(RTCPeerConnection) {
   var d = new Date();
   var time = d.getTime();
   console.log('Creating MongoDB collection');
-  streamEng.socket.emit('create collection', time.toString());
+  streamEng.socket.emit('create collection', '_' + time.toString());
 //  MongoClient.connect(url, function(err, db){
 //    if(err) throw err;
 //    var dbo = db.db("RoomsStats");
@@ -345,7 +345,7 @@ function logStats(RTCPeerConnection) {
               logs = logs + statName + ": " + statValue + ", ";
             }
 //              uploadStats(logs, dbo);
-              console.log('Creating document ' + j + ' of 4');
+              console.log('Creating document ' + i + ' of 4');
               streamEng.socket.emit('stats data', logs, statsIteration, time.toString());
               console.log(logs);
               statsIteration = statsIteration + 1;
