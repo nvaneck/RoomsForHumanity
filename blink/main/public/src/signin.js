@@ -17,6 +17,8 @@ var signin = {
     serviceAddress: "https://stream.roomsforhumanity.org:8443"
 };
 
+const io = require('socket.io-client');
+
 //objs.roomButton = $('#roomButton');
 //objs.roomButton.on('click', setUptRoom);
 //
