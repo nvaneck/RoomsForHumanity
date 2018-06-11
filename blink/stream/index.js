@@ -69,10 +69,6 @@ io.sockets.on('connection', function(socket) {
     socket.on('stats data', function(logs, iteration, name) {
         uploadStats(logs, iteration, name);
     });
-    socket.on('new pin', function(name, pin) {
-        if(streamRooms[roomName])
-            streamRooms[roomName].pin = pin;
-    });
 });
 
 /******* SETUP MAIN SERVER CONNECTION *********/
@@ -149,6 +145,9 @@ function onJoin(userID, socket, roomName, isPublishing) {
                 pin = "";
             };
             socket.emit('request new pin');
+            socket.on('new pin', function(name, pin) {
+                streamRooms[roomName].pin = pin;
+            });
         }
 
         // If the publisher is new
@@ -214,6 +213,9 @@ function onJoin(userID, socket, roomName, isPublishing) {
                 pin = "";
             };
             socket.emit('request new pin');
+            socket.on('new pin', function(name, pin) {
+                streamRooms[roomName].pin = pin;
+            });
         }
 
         // If client is in the room, turn their subscribe on
