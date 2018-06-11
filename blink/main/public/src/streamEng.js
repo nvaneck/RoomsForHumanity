@@ -54,8 +54,10 @@ streamEng.publish = function() {
 
   //Allows client to respond to requests to generate a new pin number
   streamEng.socket.on('request new pin', function() {
+    console.log("Received pin request");
     pin = prompt("Please enter a pin to protect your room", "e.g 94287");
     streamEng.socket.emit('new pin', roomName, pin);
+    console.log("Sent requested pin");
   });
 
 };
@@ -73,8 +75,10 @@ streamEng.subscribe = function() {
 
   //Allows client to respond to requests to generate a new pin number
   streamEng.socket.on('request new pin', function() {
+    console.log("Received pin request");
     pin = prompt("Please enter a pin to protect your room", "e.g 94287");
     streamEng.socket.emit('new pin', roomName, pin);
+    console.log("sent requested pin");
   });
 
   // When it receives a subscriber ready message, add user to peers (only publishers get subscriber ready msg's)
