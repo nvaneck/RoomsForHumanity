@@ -47,9 +47,15 @@ streamEng.setupService = function() {
 
 streamEng.publish = function() {
   setupMediaStream(false);
-  streamEng.socket.emit('publish', user.userID, roomName);
-  user.isPublished = true;
-  console.log("Publishing");
+  streamEng.socket.emit('query rooms', roomName);
+  streamEng.socket.on('query response', function(roomExists, passcode) {
+    if(!roomExists) {
+      pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
+    }
+    streamEng.socket.emit('publish', user.userID, roomName, pin);
+    user.isPublished = true;
+    console.log("Publishing");
+  });
 };
 
 streamEng.subscribe = function() {
@@ -61,7 +67,13 @@ streamEng.subscribe = function() {
     //   streamEng.publish();
     // });
 
-  streamEng.socket.emit('subscribe', user.userID, roomName);
+  streamEng.socket.emit('query rooms', roomName);
+  streamEng.socket.on('query response', function(roomExists, passcode) {
+    if(!roomExists) {
+      pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
+    }
+
+  streamEng.socket.emit('subscribe', user.userID, roomName, pin);
 
   // When it receives a subscriber ready message, add user to peers (only publishers get subscriber ready msg's)
   streamEng.socket.on('subscriber ready', function(clientID) {
@@ -147,7 +159,7 @@ streamEng.subscribe = function() {
     if (typeof streamEng.onSubscribeDone !== "undefined") {
         streamEng.onSubscribeDone();
     }
-
+  });
 }
 
 

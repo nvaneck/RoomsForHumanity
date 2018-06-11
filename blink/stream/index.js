@@ -70,6 +70,10 @@ io.sockets.on('connection', function(socket) {
         uploadStats(logs, iteration, name);
     });
 
+    socket.on('query rooms', function(roomName) {
+        onQuery(socket, roomName);
+    });
+
 });
 
 /******* SETUP MAIN SERVER CONNECTION *********/
@@ -133,7 +137,7 @@ function onDisconnect(userID, roomName) {
     saveStreamRoomData(streamRooms);
 }
 
-function onJoin(userID, socket, roomName, isPublishing) {
+function onJoin(userID, socket, roomName, isPublishing, pin) {
 
     // IF it is a publisher, setup as the broadcaster;
     if (isPublishing === true) {
@@ -142,7 +146,8 @@ function onJoin(userID, socket, roomName, isPublishing) {
         if (!streamRooms[roomName]) {
             streamRooms[roomName] = {
                 clients: {},
-                numPublishers: 0
+                numPublishers: 0,
+                pin: pin
             };
         }
 
@@ -205,7 +210,8 @@ function onJoin(userID, socket, roomName, isPublishing) {
             console.log("Client created room:", roomName);
             streamRooms[roomName] = {
                 clients: {},
-                numPublishers: 0
+                numPublishers: 0,
+                pin: pin
             };
         }
 
@@ -342,4 +348,13 @@ function makeCollection(name) {
             db.close();
         });
     });
+}
+
+function onQuery(socket, roomName) {
+    if(streamRooms[roomName]) {
+        socket.emit('query response', true, streamRooms[roomName].pin);
+    }
+    else {
+        socket.emit('query response', false, "");
+    }
 }
