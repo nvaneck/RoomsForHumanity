@@ -70,9 +70,13 @@ io.sockets.on('connection', function(socket) {
         uploadStats(logs, iteration, name);
     });
 
-    socket.on('query rooms', function(roomName) {
-        onQuery(socket, roomName);
+    socket.on('publish rooms', function(roomName) {
+        onPublish(socket, roomName);
     });
+
+    socket.on('subscribe rooms', function(roomName) {
+        onSubscribe(socket, roomName);
+    })
 
 });
 
@@ -350,11 +354,20 @@ function makeCollection(name) {
     });
 }
 
-function onQuery(socket, roomName) {
+function onPublish(socket, roomName) {
     if(streamRooms[roomName]) {
-        socket.emit('query response', true, streamRooms[roomName].pin);
+        socket.emit('publish response', true, streamRooms[roomName].pin);
     }
     else {
-        socket.emit('query response', false, "");
+        socket.emit('publish response', false, "");
+    }
+}
+
+function onSubscribe(socket, roomName) {
+    if(streamRooms[roomName]) {
+        socket.emit('subscribe response', true, streamRooms[roomName].pin);
+    }
+    else {
+        socket.emit('subscribe response', false, "");
     }
 }

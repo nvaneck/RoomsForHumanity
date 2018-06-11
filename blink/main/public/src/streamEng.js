@@ -47,8 +47,8 @@ streamEng.setupService = function() {
 
 streamEng.publish = function() {
   setupMediaStream(false);
-  streamEng.socket.emit('query rooms', roomName);
-  streamEng.socket.on('query response', function(roomExists, passcode) {
+  streamEng.socket.emit('publish rooms', roomName);
+  streamEng.socket.on('publish response', function(roomExists, passcode) {
     if(!roomExists) {
       pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
     }
@@ -70,8 +70,8 @@ streamEng.subscribe = function() {
     //   streamEng.publish();
     // });
 
-  streamEng.socket.emit('query rooms', roomName);
-  streamEng.socket.on('query response', function(roomExists, passcode) {
+  streamEng.socket.emit('subscribe rooms', roomName);
+  streamEng.socket.on('subscribe response', function(roomExists, passcode) {
     if(!roomExists) {
       pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
     }
