@@ -6,10 +6,7 @@ var options = ["e.g ECE Meeting", "e.g Team Building",
 
 var objs = {
     goButton: undefined,
-    roomNameInput: undefined,
-    createButton: undefined,
-    createRoomNameInput: undefined,
-    pinInput: undefined
+    roomNameInput: undefined
 };
 
 //objs.roomButton = $('#roomButton');
@@ -20,31 +17,19 @@ $(document).ready(function() {
     console.log("Ready.");
 
     objs.goButton = $('#goButton');
-    objs.goButton.on('click', onJoinRoom);
+    objs.goButton.on('click', onGoToChat);
 
     objs.roomNameInput = $('#roomNameInput')[0];
-    objs.pinInput = $('#pinInput')[0];
 
-    objs.createButton = $('#createButton');
-    objs.createButton.on('click', onCreateRoom);
-
-    objs.createRoomNameInput = $('#createRoomNameInput')[0];
     //typeAnimations(options, document.getElementById('roomNameInput'));
     // printLetter("ECE Meeting", document.getElementById('roomNameInput'), 0);
 });
 
-function onJoinRoom() {
+function onGoToChat() {
     console.log("Going to chat.");
     // console.log("https://" + window.location.hostname);
 
     var roomname_in = stringToLink(objs.roomNameInput.value);
-    window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
-}
-
-function onCreateRoom() {
-    console.log("Going to chat.");
-
-    var roomname_in = stringToLink(objs.createRoomNameInput.value);
     window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
 }
 
