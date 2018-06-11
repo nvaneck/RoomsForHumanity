@@ -1,4 +1,4 @@
-//STATUS: WOrking 
+//STATUS: WOrking
 var localVideoObject;
 var remoteVideoObject;
 var broadcastButton;
@@ -19,6 +19,7 @@ var peers = [];
 var peerNumberOf = {
   "userID": "peerNumber"
 };
+var pin;
 
 var constraints = {
   video: true,
@@ -50,6 +51,13 @@ streamEng.publish = function() {
   streamEng.socket.emit('publish', user.userID, roomName);
   user.isPublished = true;
   console.log("Publishing");
+
+  //Allows client to respond to requests to generate a new pin number
+  streamEng.socket.on('request new pin', function() {
+    pin = prompt("Please enter a pin to protect your room", "e.g 94287");
+    streamEng.socket.emit('new pin', roomName, pin);
+  });
+
 };
 
 streamEng.subscribe = function() {
@@ -62,6 +70,12 @@ streamEng.subscribe = function() {
     // });
 
   streamEng.socket.emit('subscribe', user.userID, roomName);
+
+  //Allows client to respond to requests to generate a new pin number
+  streamEng.socket.on('request new pin', function() {
+    pin = prompt("Please enter a pin to protect your room", "e.g 94287");
+    streamEng.socket.emit('new pin', roomName, pin);
+  });
 
   // When it receives a subscriber ready message, add user to peers (only publishers get subscriber ready msg's)
   streamEng.socket.on('subscriber ready', function(clientID) {
