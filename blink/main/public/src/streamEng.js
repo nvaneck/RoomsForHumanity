@@ -47,12 +47,7 @@ streamEng.setupService = function() {
 
 streamEng.publish = function() {
   setupMediaStream(false);
-
-  var pin = prompt("Please enter a pin for your room:", "e.g. 97428");
-  if(pin = null)
-    pin = "";
-
-  streamEng.socket.emit('publish', user.userID, roomName, pin);
+  streamEng.socket.emit('publish', user.userID, roomName);
   user.isPublished = true;
   console.log("Publishing");
 };

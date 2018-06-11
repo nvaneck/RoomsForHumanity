@@ -12,11 +12,6 @@ var objs = {
     pinInput: undefined
 };
 
-var signin = {
-    socket: null,
-    serviceAddress: "https://stream.roomsforhumanity.org:8443"
-};
-
 //objs.roomButton = $('#roomButton');
 //objs.roomButton.on('click', setUptRoom);
 //
@@ -41,22 +36,6 @@ $(document).ready(function() {
 function onJoinRoom() {
     console.log("Going to chat.");
     // console.log("https://" + window.location.hostname);
-    signin.socket = io.connect(signin.serviceAddress);
-    signin.socket.emit('query rooms', roomNameInput);
-    signin.socket.on('query response', function(doesNotExist, pin) {
-        if(doesNotExist) {
-            window.alert("No room exists with this name.\nYou may either enter a different room name or create a new room.");
-        }
-        else {
-            if(pin === pinInput) {
-                var roomname_in = stringToLink(objs.roomNameInput.value);
-                window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
-            }
-            else {
-                window.alert("You have entered the wrong PIN for this room.");
-            }
-        }
-    });
 
     var roomname_in = stringToLink(objs.roomNameInput.value);
     window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
@@ -64,18 +43,9 @@ function onJoinRoom() {
 
 function onCreateRoom() {
     console.log("Going to chat.");
-    signin.socket = io.connect(signin.serviceAddress);
-    signin.socket.emit('query rooms', createRoomNameInput);
-    signin.socket.on('query response', function(canJoin, pin) {
-        if(canJoin) {
-            var roomname_in = stringToLink(objs.createRoomNameInput.value);
-            window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
-        }
-        else {
-            window.alert("There is already a room with this name!\nPlease enter a different name for your room.");
-        }
-    });
 
+    var roomname_in = stringToLink(objs.createRoomNameInput.value);
+    window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
 }
 
 
