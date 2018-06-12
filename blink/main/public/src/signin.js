@@ -40,7 +40,7 @@ function onGoToChat() {
 
 function onCreateRoom() {
     console.log("Attempting to create a room");
-    var socket = io.connect();
+    var socket = io.connect("https://stream.roomsforhumanity.org");
     socket.emit('query rooms', createRoomNameInput);
     socket.on('query response', function(exists, pin) {
         if(exists) {
