@@ -382,7 +382,7 @@ function onSubscribe(socket, roomName) {
 
 function onQuery(socket, roomName) {
     if(streamRooms[roomName]) {
-        socket.emit('query response', true streamRooms[roomName].pin);
+        socket.emit('query response', true, streamRooms[roomName].pin);
     }
     else {
         socket.emit('query response', false, "");
