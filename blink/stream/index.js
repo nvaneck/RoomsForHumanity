@@ -387,6 +387,9 @@ function onQuery(socket, roomName) {
     }
     else {
         console.log("No room with this name exists");
+        for(roomName in streamRooms) {
+            console.log(roomName);
+        }
         socket.emit('query response', false, "");
     }
 }
