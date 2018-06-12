@@ -381,7 +381,7 @@ function onSubscribe(socket, roomName) {
 }
 
 function onQuery(socket, roomName) {
-    if(streamRooms[roomName] !=== null) {
+    if(streamRooms[roomName] !== undefined) {
         console.log("A room exists with the pin " + streamRooms[roomName].pin);
         socket.emit('query response', true, streamRooms[roomName].pin);
     }
