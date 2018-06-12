@@ -275,6 +275,7 @@ function saveStreamRoomData(room_data) {
 }
 
 function retreiveStreamRoomData() {
+    console.log("retreiveStreamRoomData");
     // Queries database for streamRoom
     var MongoClient = require('mongodb').MongoClient;
     var url = "mongodb://localhost:27017/";
@@ -301,6 +302,7 @@ function retreiveStreamRoomData() {
 
 function setupMongoCollection() {
     // Setup Mongo
+    console.log("setupMongoCollection");
     var MongoClient = require('mongodb').MongoClient;
     var url = "mongodb://localhost:27017/";
     MongoClient.connect(url, function (err, db) {
@@ -330,11 +332,12 @@ function setupMongoCollection() {
 // }
 
 function uploadStats(logs, statsIteration, collectionName) {
-  MongoClient.connect(url, function(err, db){
-    if(err) throw err;
-    var dbo = db.db("RoomsStats");
-    var networkStats = {iteration: "" + statsIteration, data: logs};
-    dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
+    console.log("uploadStats");
+    MongoClient.connect(url, function(err, db){
+        if(err) throw err;
+        var dbo = db.db("RoomsStats");
+        var networkStats = {iteration: "" + statsIteration, data: logs};
+        dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
         if(err) throw err;
         console.log("Document has been uploaded for iteration " + statsIteration);
         db.close();
@@ -343,6 +346,7 @@ function uploadStats(logs, statsIteration, collectionName) {
 }
 
 function makeCollection(name) {
+    console.log("makeCollection");
     MongoClient.connect(url, function(err, db) {
         if(err) throw err;
         var dbo = db.db("RoomsStats");
