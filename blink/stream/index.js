@@ -76,7 +76,11 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('subscribe rooms', function(roomName) {
         onSubscribe(socket, roomName);
-    })
+    });
+
+    socket.on('query rooms', function(roomName) {
+        onQuery(socket, roomName);
+    });
 
 });
 
@@ -373,5 +377,14 @@ function onSubscribe(socket, roomName) {
     }
     else {
         socket.emit('subscribe response', false, "");
+    }
+}
+
+function onQuery(socket, roomName) {
+    if(streamRooms[roomName]) {
+        socket.emit('query response', true streamRooms[roomName].pin);
+    }
+    else {
+        socket.emit('query response', false, "");
     }
 }

@@ -6,7 +6,8 @@ var options = ["e.g ECE Meeting", "e.g Team Building",
 
 var objs = {
     goButton: undefined,
-    roomNameInput: undefined
+    joinRoomNameInput: undefined,
+    joinPinInput: undefined
 };
 
 //objs.roomButton = $('#roomButton'); 
@@ -18,19 +19,38 @@ $(document).ready(function() {
 
     objs.goButton = $('#goButton');
     objs.goButton.on('click', onGoToChat);
+    objs.createButton = $('#createButton');
+    objs.createButton.on('click', onCreateRoom);
 
-    objs.roomNameInput = $('#roomNameInput')[0];
+    objs.joinRoomNameInput = $('#joinRoomNameInput')[0];
+    objs.joinPinInput = $('#joinPinInput')[0];
+    objs.createRoomNameInput = $('#createRoomNameInput')[0];
 
-    //typeAnimations(options, document.getElementById('roomNameInput'));
-    // printLetter("ECE Meeting", document.getElementById('roomNameInput'), 0);
+    //typeAnimations(options, document.getElementById('joinRoomNameInput'));
+    // printLetter("ECE Meeting", document.getElementById('joinRoomNameInput'), 0);
 });
 
 function onGoToChat() {
     console.log("Going to chat.");
     // console.log("https://" + window.location.hostname);
 
-    var roomname_in = stringToLink(objs.roomNameInput.value);
+    var roomname_in = stringToLink(objs.joinRoomNameInput.value);
     window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
+}
+
+function onCreateRoom() {
+    console.log("Attempting to create a room");
+    var socket = io.connect();
+    socket.emit('query rooms', createRoomNameInput);
+    socket.on('query response', function(exists, pin) {
+        if(exists) {
+            window.alert("A room with that name already exists!");
+        }
+        else {
+            var roomname_in = stringToLink(objs.createRoomNameInput.value);
+            window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
+        }
+    });
 }
 
 
