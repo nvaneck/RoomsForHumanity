@@ -66,7 +66,9 @@ $(document).ready(function() {
         $('#inviteModal').modal('toggle');
         $('#link-ref').html(function() { return window.location.href });
     });
-    window.setInterval(outStats, 1000);
+
+    //window.setInterval(outStats, 1000);
+    
     listenForNewMessages();
 });
 
