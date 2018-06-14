@@ -51,6 +51,7 @@ streamEng.publish = function() {
   streamEng.socket.on('publish response', function(roomExists, passcode) {
     if(!roomExists) {
       pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
+      console.log("Logging pin");
       console.log(pin);
     }
     else {
@@ -75,6 +76,7 @@ streamEng.subscribe = function() {
   streamEng.socket.on('subscribe response', function(roomExists, passcode) {
     if(!roomExists) {
       pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
+      console.log("Logging pin");
       console.log(pin);
     }
     else {

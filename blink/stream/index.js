@@ -146,6 +146,7 @@ function onDisconnect(userID, roomName) {
 }
 
 function onJoin(userID, socket, roomName, isPublishing, pin) {
+    console.log("Logging pin");
     console.log(pin);
 
     // IF it is a publisher, setup as the broadcaster;
