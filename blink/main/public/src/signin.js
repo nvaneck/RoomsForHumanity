@@ -31,11 +31,27 @@ $(document).ready(function() {
 });
 
 function onGoToChat() {
-    console.log("Going to chat.");
+    console.log("Attempting to join a room");
+    var socket = io.connect("https://stream.roomsforhumanity.org");
+    socket.emit('query rooms', "#" + objs.joinRoomNameInput.value);
+    socket.on('query response', function(exists, pin) {
+        if(exists) {
+            var pass = pin;
+            if(0 === pass.localeCompare(objs.joinPinInput.value)) {
+                var roomname_in = stringToLink(objs.joinRoomNameInput.value);
+                window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
+            }
+            else {
+                window.alert("This is not the correct pin for this room!");
+            }
+        }
+        else {
+            window.alert("There are no rooms with this name!");
+        }
+    });
     // console.log("https://" + window.location.hostname);
 
-    var roomname_in = stringToLink(objs.joinRoomNameInput.value);
-    window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
+    
 }
 
 function onCreateRoom() {
