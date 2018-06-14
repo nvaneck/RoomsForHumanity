@@ -35,8 +35,10 @@ function onGoToChat() {
     var socket = io.connect("https://stream.roomsforhumanity.org");
     socket.emit('query rooms', "#" + objs.joinRoomNameInput.value);
     socket.on('query response', function(exists, pin) {
+        console.log(pin);
         if(exists) {
             var pass = pin;
+            console.log(pass);
             if(0 === pass.localeCompare(objs.joinPinInput.value)) {
                 var roomname_in = stringToLink(objs.joinRoomNameInput.value);
                 window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
