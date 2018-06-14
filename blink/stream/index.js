@@ -54,12 +54,12 @@ io.sockets.on('connection', function(socket) {
         onDisconnect(userID, roomName);
     });
 
-    socket.on('publish', function(userID, roomName) {
-        onJoin(userID, socket, roomName, true);
+    socket.on('publish', function(userID, roomName, pin) {
+        onJoin(userID, socket, roomName, true, pin);
     });
 
-    socket.on('subscribe', function(userID, roomName) {
-        onJoin(userID, socket, roomName, false);
+    socket.on('subscribe', function(userID, roomName, pin) {
+        onJoin(userID, socket, roomName, false, pin);
     });
 
     socket.on('create collection', function(name) {
