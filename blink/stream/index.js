@@ -67,7 +67,8 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('stats data', function(logs, iteration, name) {
-        uploadStats(logs, iteration, name);
+        //uploadStats(logs, iteration, name);
+        console.log(logs);
     });
 
     socket.on('publish rooms', function(roomName) {
