@@ -31,7 +31,7 @@ var config = {
     messagingSenderId: "708739717802"
 };
 firebase.initializeApp(config);
-
+console.log(firebase);
 /************  SERVER SETUP *************/
 
 const certOptions = {
@@ -351,16 +351,17 @@ function setupMongoCollection() {
 
 function uploadStats(logs, statsIteration, collectionName) {
     console.log("uploadStats");
-    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){
-        if(err) throw err;
-        var dbo = db.db("RoomsStats");
-        var networkStats = {iteration: "" + statsIteration, data: logs};
-        dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
-            if(err) throw err;
-            console.log("Document has been uploaded for iteration " + statsIteration);
-            db.close();
-        });
-    });
+
+//    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){
+//        if(err) throw err;
+//        var dbo = db.db("RoomsStats");
+//        var networkStats = {iteration: "" + statsIteration, data: logs};
+//        dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
+//            if(err) throw err;
+//            console.log("Document has been uploaded for iteration " + statsIteration);
+//            db.close();
+//        });
+//    });
 }
 
 function makeCollection(name) {
