@@ -12,6 +12,7 @@ const https = require('https');
 const socketIO = require('socket.io');
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
+const firebase = require('firebase');
 
 /******** OBJECTS ***********/
 
@@ -20,6 +21,16 @@ let streamRooms = {};
 let sockets = {};
 // setupMongoCollection();
 // retreiveStreamRoomData();
+
+var config = {
+    apiKey: "AIzaSyALo9h50KIvWB83v3XiGFC74I-CY9D5DPY",
+    authDomain: "rooms-for-humanity.firebaseapp.com",
+    databaseURL: "https://rooms-for-humanity.firebaseio.com",
+    projectId: "rooms-for-humanity",
+    storageBucket: "rooms-for-humanity.appspot.com",
+    messagingSenderId: "708739717802"
+};
+firebase.initializeApp(config);
 
 /************  SERVER SETUP *************/
 
@@ -340,21 +351,21 @@ function setupMongoCollection() {
 
 function uploadStats(logs, statsIteration, collectionName) {
     console.log("uploadStats");
-    MongoClient.connect(url, function(err, db){
+    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){
         if(err) throw err;
         var dbo = db.db("RoomsStats");
         var networkStats = {iteration: "" + statsIteration, data: logs};
         dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
-        if(err) throw err;
-        console.log("Document has been uploaded for iteration " + statsIteration);
-        db.close();
+            if(err) throw err;
+            console.log("Document has been uploaded for iteration " + statsIteration);
+            db.close();
+        });
     });
-  });
 }
 
 function makeCollection(name) {
     console.log("makeCollection");
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db) {
         if(err) throw err;
         var dbo = db.db("RoomsStats");
         dbo.createCollection(name, function(err, res) {
