@@ -344,8 +344,8 @@ function logStats(RTCPeerConnection) {
   var rtcPeerconn = RTCPeerConnection;
   var d = new Date();
   var time = d.getTime();
-  console.log('Creating MongoDB collection');
-  streamEng.socket.emit('create collection', '_' + time.toString());
+  //console.log('Creating MongoDB collection');
+  //streamEng.socket.emit('create collection', '_' + time.toString());
     try {
       //Chrome
       rtcPeerconn.getStats(function callback(report) {
@@ -360,7 +360,7 @@ function logStats(RTCPeerConnection) {
               var statValue = rtcStatsReports[i].stat(statName);
               logs = logs + statName + ": " + statValue + ", ";
             }
-              console.log('Creating document ' + i + ' of 4');
+              console.log("Sending data to Firebase");
               streamEng.socket.emit('stats data', logs, statsIteration, 'test@' + time.toString());
               console.log(logs);
               statsIteration = statsIteration + 1;
