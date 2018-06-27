@@ -5,13 +5,13 @@ const HTTPS_PORT = 8443;
 const MAIN_SERVER_ADDR = "http://roomsforhumanity.org:8080";
 const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org";
 //const url = "mongodb://stream:enter1234@52.15.79.228:27017/RoomsStats";
-const url = "mongodb://localhost:27017"
+//const url = "mongodb://localhost:27017"
 
 const express = require('express');
 const https = require('https');
 const socketIO = require('socket.io');
 const fs = require('fs');
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 const firebase = require('firebase');
 
 /******** OBJECTS ***********/
@@ -31,7 +31,7 @@ var config = {
     messagingSenderId: "708739717802"
 };
 firebase.initializeApp(config);
-console.log(firebase);
+//console.log(firebase);
 /************  SERVER SETUP *************/
 
 const certOptions = {
@@ -78,7 +78,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('stats data', function(logs, iteration, name) {
-        //uploadStats(logs, iteration, name);
+        uploadStats(logs, iteration, name);
         console.log(logs);
     });
 
@@ -351,7 +351,12 @@ function setupMongoCollection() {
 
 function uploadStats(logs, statsIteration, collectionName) {
     console.log("uploadStats");
-
+    //collection name should be created and stored upon initialization
+    var ref = firebase.database().ref(collectionName + "/");
+    ref.push ({
+        name: collectionName,
+        stats: logs
+    });
 //    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){
 //        if(err) throw err;
 //        var dbo = db.db("RoomsStats");
