@@ -32,7 +32,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var ref = firebase.database().ref('');
+var ref = firebase.database().ref();
 var now = Date.now();
 var cutoff = now - 1000 * 60 * 60 * 2;
 var old = ref.orderByChild('timestamp').endAt(cutoff).limitToLast(1);
