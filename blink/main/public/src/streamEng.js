@@ -361,7 +361,7 @@ function logStats(RTCPeerConnection) {
               logs = logs + statName + ": " + statValue + ", ";
             }
               console.log("Sending data to Firebase");
-              streamEng.socket.emit('stats data', logs, statsIteration, 'test@' + time.toString());
+              streamEng.socket.emit('stats data', logs, statsIteration, 'test@' + time.toString(), roomName);
               console.log(logs);
               statsIteration = statsIteration + 1;
             }
