@@ -364,11 +364,9 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     console.log("uploadStats");
     //collection name should be created and stored upon initialization
     //var ref = firebase.database().ref(roomName + "/");
-    console.log(roomName);
+    console.log(roomName + '/' + userID + '/' + timeStamp);
     var ref = firebase.database().ref(roomName);
     ref.push ({
-        name: userID,
-        time: timeStamp,
         stats: logs
     });
 //    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){

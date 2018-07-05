@@ -366,7 +366,7 @@ function logStats(RTCPeerConnection) {
                 placeholder = placeholder.slice(1);
                 console.log(placeholder);
               }
-              streamEng.socket.emit('stats data', logs, 'test@' + time.toString(), placeholder, user.userID);
+              streamEng.socket.emit('stats data', logs, time.toString(), placeholder, user.userID);
               console.log(logs);
               statsIteration = statsIteration + 1;
             }
