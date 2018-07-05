@@ -362,8 +362,8 @@ function logStats(RTCPeerConnection) {
             }
               console.log("Sending data to Firebase");
               var placeholder = roomName;
-              while(placeholder.charAt(0) === '#') {
-                placeholder = placeholder.substr(1);
+              if(placeholder.charAt(0) === '#') {
+                placeholder = placeholder.slice(1);
                 console.log(placeholder);
               }
               streamEng.socket.emit('stats data', logs, 'test@' + time.toString(), placeholder, user.userID);
