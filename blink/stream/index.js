@@ -88,8 +88,8 @@ io.sockets.on('connection', function(socket) {
         makeCollection(name);
     });
 
-    socket.on('stats data', function(logs, iteration, name, roomName) {
-        uploadStats(logs, iteration, name, roomName);
+    socket.on('stats data', function(logs, timeStamp, roomName, userID) {
+        uploadStats(logs, timeStamp, roomName, userID);
         console.log(logs);
     });
 
@@ -360,12 +360,13 @@ function setupMongoCollection() {
 //     return JSON.stringify(newStreamRoom);
 // }
 
-function uploadStats(logs, statsIteration, collectionName, roomName) {
+function uploadStats(logs, timeStamp, roomName, userID) {
     console.log("uploadStats");
     //collection name should be created and stored upon initialization
-    var ref = firebase.database().ref(collectionName + "/");
+    var ref = firebase.database().ref(roomName + "/");
     ref.push ({
-        name: roomName,
+        name: userID,
+        time: timeStamp,
         stats: logs
     });
 //    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){
