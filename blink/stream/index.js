@@ -364,7 +364,7 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     //collection name should be created and stored upon initialization
     //var ref = firebase.database().ref(roomName + "/");
     console.log(roomName + '/' + userID + '/' + timeStamp);
-    var ref = firebase.database().ref(roomName + '/' + userID + '/' timestamp);
+    var ref = firebase.database().ref(roomName + '/' + userID + '/' + timestamp);
     ref.push ({
         stats: logs
     });
