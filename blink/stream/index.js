@@ -363,7 +363,9 @@ function setupMongoCollection() {
 function uploadStats(logs, timeStamp, roomName, userID) {
     console.log("uploadStats");
     //collection name should be created and stored upon initialization
-    var ref = firebase.database().ref(roomName + "/");
+    //var ref = firebase.database().ref(roomName + "/");
+    console.log(roomName);
+    var ref = firebase.database().ref(roomName);
     ref.push ({
         name: userID,
         time: timeStamp,
