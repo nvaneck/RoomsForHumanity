@@ -90,7 +90,6 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('stats data', function(logs, timeStamp, roomName, userID) {
         uploadStats(logs, timeStamp, roomName, userID);
-        console.log(logs);
     });
 
     socket.on('publish rooms', function(roomName) {
@@ -365,7 +364,7 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     //collection name should be created and stored upon initialization
     //var ref = firebase.database().ref(roomName + "/");
     console.log(roomName + '/' + userID + '/' + timeStamp);
-    var ref = firebase.database().ref(roomName);
+    var ref = firebase.database().ref(roomName + '/' + userID + '/' timestamp);
     ref.push ({
         stats: logs
     });
