@@ -92,6 +92,10 @@ io.sockets.on('connection', function(socket) {
         uploadStats(logs, timeStamp, roomName, userID);
     });
 
+    socket.on('quality', function(rating, timeStamp, roomName, userID) {
+        uploadQuality(rating, timeStamp, roomName, userID);
+    });
+
     socket.on('publish rooms', function(roomName) {
         onPublish(socket, roomName);
     });
@@ -361,23 +365,18 @@ function setupMongoCollection() {
 
 function uploadStats(logs, timeStamp, roomName, userID) {
     console.log("uploadStats");
-    //collection name should be created and stored upon initialization
-    //var ref = firebase.database().ref(roomName + "/");
     console.log(roomName + '/' + userID + '/' + timeStamp);
     var ref = firebase.database().ref(roomName + '/' + userID + '/' + timeStamp);
     ref.push ({
         stats: logs
     });
-//    MongoClient.connect('mongodb://admin:enter1234@localhost:27017/roomsStats', function(err, db){
-//        if(err) throw err;
-//        var dbo = db.db("RoomsStats");
-//        var networkStats = {iteration: "" + statsIteration, data: logs};
-//        dbo.collection(collectionName).insertOne(networkStats, function(err,res) {
-//            if(err) throw err;
-//            console.log("Document has been uploaded for iteration " + statsIteration);
-//            db.close();
-//        });
-//    });
+}
+
+function uploadQuality(rating, timeStamp, roomName, userID) {
+    var ref = firebase.database().ref(roomName + '/' + userID + '/' + timeStamp);
+    ref.push ({
+        quality: rating
+    });
 }
 
 function makeCollection(name) {

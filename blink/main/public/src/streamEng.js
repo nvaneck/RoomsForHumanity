@@ -340,12 +340,16 @@ function errorHandler(error) {
 }
 
 //Output stats to console log
-function logStats(RTCPeerConnection) {
+function logStats(RTCPeerConnection, rating) {
   var rtcPeerconn = RTCPeerConnection;
   var d = new Date();
   var time = d.getTime();
-  //console.log('Creating MongoDB collection');
-  //streamEng.socket.emit('create collection', '_' + time.toString());
+  var placeholder = roomName;
+  if(placeholder.charAt(0) === '#') {
+    placeholder = placeholder.slice(1);
+    console.log(placeholder);
+  }
+  streamEng.socket.emit('quality', rating, time.toString(), placeholder, user.userID);
     try {
       //Chrome
       rtcPeerconn.getStats(function callback(report) {
@@ -361,11 +365,6 @@ function logStats(RTCPeerConnection) {
               logs = logs + statName + ": " + statValue + ", ";
             }
               console.log("Sending data to Firebase");
-              var placeholder = roomName;
-              if(placeholder.charAt(0) === '#') {
-                placeholder = placeholder.slice(1);
-                console.log(placeholder);
-              }
               streamEng.socket.emit('stats data', logs, time.toString(), placeholder, user.userID);
               console.log(logs);
               statsIteration = statsIteration + 1;
@@ -387,9 +386,9 @@ function logStats(RTCPeerConnection) {
 //  });
 }
 
-function outStats() {
+function outStats(rating) {
   for(var i = 0; i < peers.length; i++) {
     console.log("Stats for connection " + i);
-    logStats(peers[i].peerConnection);
+    logStats(peers[i].peerConnection, rating);
   }
 }

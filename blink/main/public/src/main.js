@@ -46,6 +46,15 @@ $(document).ready(function() {
         streamEng.shouldScreenshare = true;
         $('#screenshareButton').attr("disabled", "true");
     });
+    $('#poorButton').click(function() {
+        outStats(1);
+    });
+    $('#avgButton').click(function() {
+        outStats(2);
+    });
+    $('#goodButton').click(function() {
+        outStats(3);
+    });
     $('#message-button').click(sendMessage);
     $('#message-input').keyup(function(event) {
         if (event.keyCode === 13) {
@@ -67,7 +76,7 @@ $(document).ready(function() {
         $('#link-ref').html(function() { return window.location.href });
     });
 
-    window.setInterval(outStats, 60000);
+    //window.setInterval(outStats, 60000);
     
     listenForNewMessages();
 });
