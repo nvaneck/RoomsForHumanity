@@ -399,6 +399,7 @@ function uploadPeerStats(timeStamp, roomName, userID) {
     for(name in streamRooms) {
         console.log("Room: " + name);
     }
+    console.log("Testing room: #" + roomName);
     let clientsInRoom = streamRooms['#' + roomName].clients;
     if(clientsInRoom.length > 1) {
         for(clientID in clientsInRoom) {
