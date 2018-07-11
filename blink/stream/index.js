@@ -385,6 +385,9 @@ function uploadStats(logs, timeStamp, roomName, userID) {
             }
         }
     }
+    else {
+        console.log("One or fewer clients in room");
+    }
 }
 
 function uploadQuality(rating, timeStamp, roomName, userID) {
