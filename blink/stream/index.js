@@ -401,7 +401,7 @@ function uploadPeerStats(timeStamp, roomName, userID) {
     }
     console.log("Testing room: #" + roomName);
     let clientsInRoom = streamRooms['#' + roomName].clients;
-    if(clientsInRoom.length > 1) {
+    //if(clientsInRoom.length > 1) {
         for(clientID in clientsInRoom) {
             console.log("Client: " + clientID);
             if(clientID !== userID) {
@@ -414,14 +414,14 @@ function uploadPeerStats(timeStamp, roomName, userID) {
                 });
             }
         }
-    }
-    else {
-        console.log("One or fewer clients in room");
-        console.log("# of CLients: " + clientsInRoom.length);
-        for(clientID in clientsInRoom) {
-            console.log("Client: " + clientID);
-        }
-    }
+    //}
+    //else {
+    //    console.log("One or fewer clients in room");
+    //    console.log("# of CLients: " + clientsInRoom.length);
+    //    for(clientID in clientsInRoom) {
+    //        console.log("Client: " + clientID);
+    //    }
+    //}
 
 }
 
