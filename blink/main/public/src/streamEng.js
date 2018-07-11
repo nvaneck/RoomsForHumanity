@@ -391,6 +391,10 @@ function logStats(RTCPeerConnection, rating) {
 }
 
 function getSenderStats(RTCPeerConnection) {
+  var placeholder = roomName;
+  if(placeholder.charAt(0) === '#') {
+    placeholder = placeholder.slice(1);
+  }
   var rtcPeerconn = RTCPeerConnection;
   try {
     rtcPeerconn.getStats(function callback(report) {
@@ -402,7 +406,7 @@ function getSenderStats(RTCPeerConnection) {
           var statValue = rtcStatsReports[i].stat(statName);
           logs = logs + statName + ": " + statValue + ", ";
         }
-        streamEng.socket.emit('sender data', logs);
+        streamEng.socket.emit('sender stats', logs, time.toString(), placeholder, user.userID);
       }
     });
   } catch (e) {

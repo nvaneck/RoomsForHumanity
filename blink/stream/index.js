@@ -93,7 +93,11 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('sender data', function(timeStamp, roomName, userID) {
-        uploadPeerStats(timeStamp, roomName, userID);
+        requestPeerStats(timeStamp, roomName, userID);
+    });
+
+    socket.on('sender stats', function(logs, timeStamp, roomName, userID) {
+        uploadPeerStats(logs, timeStamp, roomName, userID);
     });
 
     socket.on('quality', function(rating, timeStamp, roomName, userID) {
@@ -394,7 +398,7 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     //}
 }
 
-function uploadPeerStats(timeStamp, roomName, userID) {
+function requestPeerStats(timeStamp, roomName, userID) {
     var ref = firebase.database().ref(roomName + '/' + userID + '/' + timeStamp);
     for(name in streamRooms) {
         console.log("Room: " + name);
@@ -406,23 +410,22 @@ function uploadPeerStats(timeStamp, roomName, userID) {
             console.log("Client: " + clientID);
             if(clientID !== userID) {
                 sockets[clientID].emit('sender stats');
-                socket.on('sender data', function(sendLogs) {
-                    var data = 'peerID: ' + userID + ' ' + sendLogs;
-                    ref.push({
-                        stats: data
-                    });
-                });
+                //socket.on('sender data', function(sendLogs) {
+                //    var data = 'peerID: ' + userID + ' ' + sendLogs;
+                //    ref.push({
+                //        stats: data
+                //    });
+                //});
             }
         }
-    //}
-    //else {
-    //    console.log("One or fewer clients in room");
-    //    console.log("# of CLients: " + clientsInRoom.length);
-    //    for(clientID in clientsInRoom) {
-    //        console.log("Client: " + clientID);
-    //    }
-    //}
+}
 
+function uploadPeerStats(sendLogs, timeStamp, roomName, userID) {
+    var ref = firebase.database().ref(roomName + '/' + userID + '/' + timeStamp);
+    var data = 'peerID: ' + userID + ' ' + sendLogs;
+    ref.push({
+        stats: data
+    });
 }
 
 function uploadQuality(rating, timeStamp, roomName, userID) {
