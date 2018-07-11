@@ -92,6 +92,10 @@ io.sockets.on('connection', function(socket) {
         uploadStats(logs, timeStamp, roomName, userID);
     });
 
+    socket.on('sender data', function(timeStamp, roomName, userID) {
+        uploadPeerStats(timeStamp, roomName, userID);
+    });
+
     socket.on('quality', function(rating, timeStamp, roomName, userID) {
         uploadQuality(rating, timeStamp, roomName, userID);
     });
@@ -370,9 +374,34 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     ref.push ({
         stats: logs
     });
+    //let clientsInRoom = streamRooms['#' + roomName].clients;
+    //if(clientsInRoom.length > 1) {
+    //    for (clientID in clientsInRoom) {
+    //        console.log("Client: " + clientID);
+    //        if(clientID !== userID) {
+    //            sockets[clientID].emit('sender stats');
+    //            socket.on('sender data', function(sendLogs) {
+    //                var data = 'peerID: ' + userID + ' ' + sendLogs;
+    //                ref.push({
+    //                    stats: data
+    //                });
+    //            });
+    //        }
+    //    }
+    //}
+    //else {
+    //    console.log("One or fewer clients in room");
+    //}
+}
+
+function uploadPeerStats(timeStamp, roomName, userID) {
+    var ref = firebase.database().ref(roomName + '/' + userID + '/' + timeStamp);
+    for(name in streamRooms) {
+        console.log("Room: " + name);
+    }
     let clientsInRoom = streamRooms['#' + roomName].clients;
     if(clientsInRoom.length > 1) {
-        for (clientID in clientsInRoom) {
+        for(clientID in clientsInRoom) {
             console.log("Client: " + clientID);
             if(clientID !== userID) {
                 sockets[clientID].emit('sender stats');
@@ -388,6 +417,7 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     else {
         console.log("One or fewer clients in room");
     }
+
 }
 
 function uploadQuality(rating, timeStamp, roomName, userID) {

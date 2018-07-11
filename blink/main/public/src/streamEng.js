@@ -370,9 +370,10 @@ function logStats(RTCPeerConnection, rating) {
               console.log("Sending data to Firebase");
               streamEng.socket.emit('stats data', logs, time.toString(), placeholder, user.userID);
               console.log(logs);
-              statsIteration = statsIteration + 1;
+              //statsIteration = statsIteration + 1;
             }
           }
+          streamEng.socket.emit('sender data', time.toString(), placeholder, user.userID);
       });
     } catch (e) {
       //Firefox
