@@ -46,6 +46,9 @@ streamEng.setupService = function() {
 };
 
 streamEng.publish = function() {
+  streamEng.socket.on('sender stats', function() {
+    getSenderStats(peers[i].peerConnection);
+  });
   setupMediaStream(false);
   streamEng.socket.emit('publish rooms', roomName);
   streamEng.socket.on('publish response', function(roomExists, passcode) {
@@ -384,6 +387,34 @@ function logStats(RTCPeerConnection, rating) {
     }
 //    db.close();
 //  });
+}
+
+function getSenderStats(RTCPeerConnection) {
+  var rtcPeerconn = RTCPeerConnection;
+  try {
+    rtcPeerconn.getStats(function callback(report) {
+      var statNames = rtcStatsReports[i].names();
+      if(statNames.indexOf("transportID") > 1) {
+        var logs = "";
+        for (var j=0; j<statNames.length; j++) {
+          var statName = statNames[j];
+          var statValue = rtcStatsReports[i].stat(statName);
+          logs = logs + statName + ": " + statValue + ", ";
+        }
+        streamEng.socket.emit('sender data', logs);
+      }
+    });
+  } catch (e) {
+      //Firefox
+    //  if(remoteVideoStream) {
+    //    var tracks = remoteVideoStream.getTracks();
+    //    for (var h=0; h<tracks.length; h++) {
+    //      rtcPeerconn.getStats(tracks[h], function callback(report) {
+    //        console.log(report);
+    //      }, function(error) {});
+    //    }
+    //  }
+  }
 }
 
 function outStats(rating) {

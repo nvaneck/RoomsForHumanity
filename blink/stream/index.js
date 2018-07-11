@@ -370,6 +370,20 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     ref.push ({
         stats: logs
     });
+    let clientsInRoom = streamRooms['#' + roomName].clients;
+    if(clientsInRoom.length > 1) {
+        for (clientID in clientsInRoom) {
+            if(clientID !== userID) {
+                sockets[clientID].emit('sender stats');
+                socket.on('sender data', function(sendLogs) {
+                    var data = userID + sendLogs;
+                    ref.push({
+                        stats: sendLogs
+                    });
+                });
+            }
+        }
+    }
 }
 
 function uploadQuality(rating, timeStamp, roomName, userID) {
