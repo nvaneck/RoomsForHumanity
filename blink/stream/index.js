@@ -416,6 +416,9 @@ function uploadPeerStats(timeStamp, roomName, userID) {
     }
     else {
         console.log("One or fewer clients in room");
+        for(clientID in clientsInRoom) {
+            console.log("Client: " + clientID);
+        }
     }
 
 }
