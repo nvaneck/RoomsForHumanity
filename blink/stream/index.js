@@ -373,12 +373,13 @@ function uploadStats(logs, timeStamp, roomName, userID) {
     let clientsInRoom = streamRooms['#' + roomName].clients;
     if(clientsInRoom.length > 1) {
         for (clientID in clientsInRoom) {
+            console.log("Client: " + clientID);
             if(clientID !== userID) {
                 sockets[clientID].emit('sender stats');
                 socket.on('sender data', function(sendLogs) {
-                    var data = userID + sendLogs;
+                    var data = 'peerID: ' + userID + ' ' + sendLogs;
                     ref.push({
-                        stats: sendLogs
+                        stats: data
                     });
                 });
             }
