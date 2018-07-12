@@ -393,39 +393,38 @@ function logStats(RTCPeerConnection, rating) {
 }
 
 function getSenderStats(RTCPeerConnection, requesterID) {
+  var rtcPeerconn = RTCPeerConnection;
   var d = new Date();
   var time = d.getTime();
-  console.log("Request received for sender stats");
   var placeholder = roomName;
   if(placeholder.charAt(0) === '#') {
     placeholder = placeholder.slice(1);
+    console.log(placeholder);
   }
-  var rtcPeerconn = RTCPeerConnection;
-  try {
-    console.log("Attempting to collect statistics");
-    rtcPeerconn.getStats(function callback(report) {
-      console.log("Creating a report");
-      var rtcStatsReports = report.result();
-      for(var i=0; i<rtcStatsReports.length; i++) {
-        console.log("Creating a list of stat names");
-        var statNames = rtcStatsReports[i].names();
-        if(statNames.indexOf("transportID") > -1) {
-          console.log("Creating a log for the stats");
-          var logs = "";
-          for (var j=0; j<statNames.length; j++) {
-            var statName = statNames[j];
-            console.log("Grabbing stat value");
-            var statValue = rtcStatsReports[i].stat(statName);
-            logs = logs + statName + ": " + statValue + ", ";
+  streamEng.socket.emit('quality', rating, time.toString(), placeholder, user.userID);
+    try {
+      //Chrome
+      rtcPeerconn.getStats(function callback(report) {
+        var rtcStatsReports = report.result();
+        for(var i=0; i<rtcStatsReports.length; i++) {
+          var statNames = rtcStatsReports[i].names();
+          //filter the ICE stats
+          if(statNames.indexOf("transportId") > -1) {
+            var logs = "";
+            for(var j=0; j<statNames.length; j++) {
+              var statName = statNames[j];
+              var statValue = rtcStatsReports[i].stat(statName);
+              logs = logs + statName + ": " + statValue + ", ";
+            }
+              console.log("Sending data to Firebase");
+              streamEng.socket.emit('stats data', logs, time.toString(), placeholder, user.userID);
+              console.log(logs);
+              //statsIteration = statsIteration + 1;
+            }
           }
-          console.log("Emitting sender stats");
           streamEng.socket.emit('sender stats', logs, requesterID, time.toString(), placeholder, user.userID);
-          console.log(logs);
-        }
-      }
-    });
-  } catch (e) {
-    console.log("Error in the try statement");
+      });
+    } catch (e) {
       //Firefox
     //  if(remoteVideoStream) {
     //    var tracks = remoteVideoStream.getTracks();
@@ -435,7 +434,9 @@ function getSenderStats(RTCPeerConnection, requesterID) {
     //      }, function(error) {});
     //    }
     //  }
-  }
+    }
+//    db.close();
+//  });
 }
 
 function outStats(rating) {
