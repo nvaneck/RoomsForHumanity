@@ -404,7 +404,7 @@ function getSenderStats(RTCPeerConnection, requesterID) {
       var rtcStatsReports = report.result();
       for(var i=0; i<rtcStatsReports.length; i++) {
         var statNames = rtcStatsReports[i].names();
-        if(statNames.indexOf("transportID") > 1) {
+        if(statNames.indexOf("transportID") > -1) {
           var logs = "";
           for (var j=0; j<statNames.length; j++) {
             var statName = statNames[j];
@@ -413,6 +413,7 @@ function getSenderStats(RTCPeerConnection, requesterID) {
           }
           console.log("Emitting sender stats");
           streamEng.socket.emit('sender stats', logs, requesterID, time.toString(), placeholder, user.userID);
+          console.log(logs);
         }
       }
     });
