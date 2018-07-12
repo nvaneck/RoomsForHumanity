@@ -393,6 +393,8 @@ function logStats(RTCPeerConnection, rating) {
 }
 
 function getSenderStats(RTCPeerConnection, requesterID) {
+  var d = new Date();
+  var time = d.getTime();
   console.log("Request received for sender stats");
   var placeholder = roomName;
   if(placeholder.charAt(0) === '#') {
@@ -400,14 +402,19 @@ function getSenderStats(RTCPeerConnection, requesterID) {
   }
   var rtcPeerconn = RTCPeerConnection;
   try {
+    console.log("Attempting to collect statistics");
     rtcPeerconn.getStats(function callback(report) {
+      console.log("Creating a report");
       var rtcStatsReports = report.result();
       for(var i=0; i<rtcStatsReports.length; i++) {
+        console.log("Creating a list of stat names");
         var statNames = rtcStatsReports[i].names();
         if(statNames.indexOf("transportID") > -1) {
+          console.log("Creating a log for the stats");
           var logs = "";
           for (var j=0; j<statNames.length; j++) {
             var statName = statNames[j];
+            console.log("Grabbing stat value");
             var statValue = rtcStatsReports[i].stat(statName);
             logs = logs + statName + ": " + statValue + ", ";
           }
