@@ -96,8 +96,8 @@ io.sockets.on('connection', function(socket) {
         requestPeerStats(timeStamp, roomName, userID);
     });
 
-    socket.on('sender stats', function(logs, peerID, timeStamp, roomName, userID) {
-        uploadPeerStats(logs, peerID, timeStamp, roomName, userID);
+    socket.on('sender stats', function(logs, requesterID, timeStamp, roomName, userID) {
+        uploadPeerStats(logs, requesterID, timeStamp, roomName, userID);
     });
 
     socket.on('quality', function(rating, timeStamp, roomName, userID) {
