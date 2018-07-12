@@ -416,12 +416,10 @@ function getSenderStats(RTCPeerConnection, requesterID) {
               logs = logs + statName + ": " + statValue + ", ";
             }
               console.log("Sending data to Firebase");
-              streamEng.socket.emit('stats data', logs, time.toString(), placeholder, user.userID);
-              console.log(logs);
+              streamEng.socket.emit('sender data', logs, requesterID, time.toString(), placeholder, user.userID);
               //statsIteration = statsIteration + 1;
             }
           }
-          streamEng.socket.emit('sender stats', logs, requesterID, time.toString(), placeholder, user.userID);
       });
     } catch (e) {
       //Firefox

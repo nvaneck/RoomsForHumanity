@@ -421,7 +421,7 @@ function requestPeerStats(timeStamp, roomName, userID) {
         }
 }
 
-function uploadPeerStats(sendLogs, userID, timeStamp, roomName, requesterID) {
+function uploadPeerStats(sendLogs, requesterID, timeStamp, roomName, userID) {
     console.log("Sender stats received, uploading to firebase");
     var ref = firebase.database().ref(roomName + '/' + requesterID + '/' + timeStamp);
     var data = 'peerID: ' + userID + ' ' + sendLogs;
