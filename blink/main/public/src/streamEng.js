@@ -46,8 +46,8 @@ streamEng.setupService = function() {
 };
 
 streamEng.publish = function() {
-  streamEng.socket.on('sender stats', function() {
-    getSenderStats(peers[i].peerConnection);
+  streamEng.socket.on('sender stats', function(userID) {
+    getSenderStats(peers[i].peerConnection, peerID);
   });
   setupMediaStream(false);
   streamEng.socket.emit('publish rooms', roomName);
@@ -390,7 +390,8 @@ function logStats(RTCPeerConnection, rating) {
 //  });
 }
 
-function getSenderStats(RTCPeerConnection) {
+function getSenderStats(RTCPeerConnection, peerID) {
+  console.log("Request received for sender stats");
   var placeholder = roomName;
   if(placeholder.charAt(0) === '#') {
     placeholder = placeholder.slice(1);
@@ -406,7 +407,8 @@ function getSenderStats(RTCPeerConnection) {
           var statValue = rtcStatsReports[i].stat(statName);
           logs = logs + statName + ": " + statValue + ", ";
         }
-        streamEng.socket.emit('sender stats', logs, time.toString(), placeholder, user.userID);
+        console.log("Emitting sender stats");
+        streamEng.socket.emit('sender stats', logs, peerID, time.toString(), placeholder, user.userID);
       }
     });
   } catch (e) {

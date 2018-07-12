@@ -96,8 +96,8 @@ io.sockets.on('connection', function(socket) {
         requestPeerStats(timeStamp, roomName, userID);
     });
 
-    socket.on('sender stats', function(logs, timeStamp, roomName, userID) {
-        uploadPeerStats(logs, timeStamp, roomName, userID);
+    socket.on('sender stats', function(logs, peerID, timeStamp, roomName, userID) {
+        uploadPeerStats(logs, peerID, timeStamp, roomName, userID);
     });
 
     socket.on('quality', function(rating, timeStamp, roomName, userID) {
@@ -409,7 +409,8 @@ function requestPeerStats(timeStamp, roomName, userID) {
         for(clientID in clientsInRoom) {
             console.log("Client: " + clientID);
             if(clientID !== userID) {
-                sockets[clientID].emit('sender stats');
+                console.log("Sending a request for sender stats from client: " + clientID);
+                sockets[clientID].emit('sender stats', userID);
                 //socket.on('sender data', function(sendLogs) {
                 //    var data = 'peerID: ' + userID + ' ' + sendLogs;
                 //    ref.push({
@@ -420,8 +421,9 @@ function requestPeerStats(timeStamp, roomName, userID) {
         }
 }
 
-function uploadPeerStats(sendLogs, timeStamp, roomName, userID) {
-    var ref = firebase.database().ref(roomName + '/' + userID + '/' + timeStamp);
+function uploadPeerStats(sendLogs, userID, timeStamp, roomName, requesterID) {
+    console.log("Sender stats received, uploading to firebase");
+    var ref = firebase.database().ref(roomName + '/' + requesterID + '/' + timeStamp);
     var data = 'peerID: ' + userID + ' ' + sendLogs;
     ref.push({
         stats: data
