@@ -425,6 +425,7 @@ function getSenderStats(RTCPeerConnection, requesterID) {
       }
     });
   } catch (e) {
+    console.log("Error in the try statement");
       //Firefox
     //  if(remoteVideoStream) {
     //    var tracks = remoteVideoStream.getTracks();
