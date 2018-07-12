@@ -46,9 +46,9 @@ streamEng.setupService = function() {
 };
 
 streamEng.publish = function() {
-  streamEng.socket.on('sender stats', function(requesterID) {
+  streamEng.socket.on('sender stats', function(requesterID, timeStamp) {
     for(i in peers) {
-          getSenderStats(peers[i].peerConnection, requesterID);
+          getSenderStats(peers[i].peerConnection, requesterID, timeStamp);
     }
   });
   setupMediaStream(false);
@@ -392,10 +392,8 @@ function logStats(RTCPeerConnection, rating) {
 //  });
 }
 
-function getSenderStats(RTCPeerConnection, requesterID) {
+function getSenderStats(RTCPeerConnection, requesterID, timeStamp) {
   var rtcPeerconn = RTCPeerConnection;
-  var d = new Date();
-  var time = d.getTime();
   var placeholder = roomName;
   if(placeholder.charAt(0) === '#') {
     placeholder = placeholder.slice(1);
@@ -416,7 +414,7 @@ function getSenderStats(RTCPeerConnection, requesterID) {
               logs = logs + statName + ": " + statValue + ", ";
             }
               console.log("Sending data to firebase under the name: " + placeholder);
-              streamEng.socket.emit('sender stats', logs, requesterID, time.toString(), placeholder, user.userID);
+              streamEng.socket.emit('sender stats', logs, requesterID, timeStamp, placeholder, user.userID);
               //statsIteration = statsIteration + 1;
             }
           }

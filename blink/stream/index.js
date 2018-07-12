@@ -410,7 +410,7 @@ function requestPeerStats(timeStamp, roomName, userID) {
             console.log("Client: " + clientID);
             if(clientID !== userID) {
                 console.log("Sending a request for sender stats from client: " + clientID);
-                sockets[clientID].emit('sender stats', userID);
+                sockets[clientID].emit('sender stats', userID, timeStamp);
                 //socket.on('sender data', function(sendLogs) {
                 //    var data = 'peerID: ' + userID + ' ' + sendLogs;
                 //    ref.push({
