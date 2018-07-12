@@ -47,7 +47,10 @@ streamEng.setupService = function() {
 
 streamEng.publish = function() {
   streamEng.socket.on('sender stats', function(userID) {
-    getSenderStats(peers[i].peerConnection, peerID);
+    for(i in peers) {
+          getSenderStats(peers[i].peerConnection, peerID);
+
+    }
   });
   setupMediaStream(false);
   streamEng.socket.emit('publish rooms', roomName);
