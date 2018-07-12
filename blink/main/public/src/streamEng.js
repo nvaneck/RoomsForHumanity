@@ -415,7 +415,7 @@ function getSenderStats(RTCPeerConnection, requesterID) {
               var statValue = rtcStatsReports[i].stat(statName);
               logs = logs + statName + ": " + statValue + ", ";
             }
-              console.log("Sending data to Firebase");
+              console.log("Sending data to firebase under the name: " + placeholder);
               streamEng.socket.emit('sender data', logs, requesterID, time.toString(), placeholder, user.userID);
               //statsIteration = statsIteration + 1;
             }
