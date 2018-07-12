@@ -402,7 +402,7 @@ function getSenderStats(RTCPeerConnection, requesterID) {
   try {
     rtcPeerconn.getStats(function callback(report) {
       var rtcStatsReports = report.result();
-      for(var i=0; ic<rtcStatsReports.length; i++) {
+      for(var i=0; i<rtcStatsReports.length; i++) {
         var statNames = rtcStatsReports[i].names();
         if(statNames.indexOf("transportID") > 1) {
           var logs = "";
