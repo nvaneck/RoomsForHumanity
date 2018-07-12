@@ -401,16 +401,19 @@ function getSenderStats(RTCPeerConnection, requesterID) {
   var rtcPeerconn = RTCPeerConnection;
   try {
     rtcPeerconn.getStats(function callback(report) {
-      var statNames = rtcStatsReports[i].names();
-      if(statNames.indexOf("transportID") > 1) {
-        var logs = "";
-        for (var j=0; j<statNames.length; j++) {
-          var statName = statNames[j];
-          var statValue = rtcStatsReports[i].stat(statName);
-          logs = logs + statName + ": " + statValue + ", ";
+      var rtcStatsReports = report.result();
+      for(var i=0; ic<rtcStatsReports.length; i++) {
+        var statNames = rtcStatsReports[i].names();
+        if(statNames.indexOf("transportID") > 1) {
+          var logs = "";
+          for (var j=0; j<statNames.length; j++) {
+            var statName = statNames[j];
+            var statValue = rtcStatsReports[i].stat(statName);
+            logs = logs + statName + ": " + statValue + ", ";
+          }
+          console.log("Emitting sender stats");
+          streamEng.socket.emit('sender stats', logs, requesterID, time.toString(), placeholder, user.userID);
         }
-        console.log("Emitting sender stats");
-        streamEng.socket.emit('sender stats', logs, requesterID, time.toString(), placeholder, user.userID);
       }
     });
   } catch (e) {
