@@ -44,7 +44,7 @@ function onGoToChat() {
                 window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
             }
             else {
-                window.location.href = "https://roomsforhumanity.org/pass.html";
+                window.alert("This is not the correct pin for this room!");
             }
         }
         else {
@@ -62,7 +62,7 @@ function onCreateRoom() {
     socket.emit('query rooms', "#" + objs.createRoomNameInput.value);
     socket.on('query response', function(exists, pin) {
         if(exists) {
-            window.alert("A room with that name already exists!");
+            window.location.href = "https://roomsforhumanity.org/pass.html";
         }
         else {
             var roomname_in = stringToLink(objs.createRoomNameInput.value);
