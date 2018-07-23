@@ -52,8 +52,6 @@ function onGoToChat() {
         }
     });
     // console.log("https://" + window.location.hostname);
-
-    
 }
 
 function onCreateRoom() {
@@ -62,7 +60,8 @@ function onCreateRoom() {
     socket.emit('query rooms', "#" + objs.createRoomNameInput.value);
     socket.on('query response', function(exists, pin) {
         if(exists) {
-            window.location.href = "https://roomsforhumanity.org/pass.html";
+            var roomename_in = stringToLink(objs.createRoomNameInput.value);
+            window.location.href = "https://roomsforhumanity.org/pass.html#" + roomname_in;
         }
         else {
             var roomname_in = stringToLink(objs.createRoomNameInput.value);

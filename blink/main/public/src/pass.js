@@ -37,16 +37,18 @@ function onGoBack() {
 }
 
 function onGoToChat() {
+    var roomName = window.location.hash;
+    console.log(roomName);
     console.log("Attempting to join a room");
     var socket = io.connect("https://stream.roomsforhumanity.org");
-    socket.emit('query rooms', "#" + objs.joinRoomNameInput.value);
+    socket.emit('query rooms', "#" + roomName);
     socket.on('query response', function(exists, pin) {
         console.log(pin);
         if(exists) {
             var pass = pin;
             console.log(pass);
             if(0 === pass.localeCompare(objs.pinInput.value)) {
-                var roomname_in = stringToLink(objs.joinRoomNameInput.value);
+                var roomname_in = stringToLink(roomName);
                 window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
             }
             else {
