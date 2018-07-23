@@ -60,6 +60,7 @@ function onCreateRoom() {
     socket.emit('query rooms', "#" + objs.createRoomNameInput.value);
     socket.on('query response', function(exists, pin) {
         if(exists) {
+            console.log(objs.createRoomNameInput.value);
             var roomename_in = stringToLink(objs.createRoomNameInput.value);
             window.location.href = "https://roomsforhumanity.org/pass.html#" + roomname_in;
         }
