@@ -19,16 +19,22 @@ $(document).ready(function() {
 
     objs.goButton = $('#goButton');
     objs.goButton.on('click', onGoToChat);
-    objs.createButton = $('#createButton');
-    objs.createButton.on('click', onCreateRoom);
 
-    objs.joinRoomNameInput = $('#joinRoomNameInput')[0];
-    objs.joinPinInput = $('#joinPinInput')[0];
-    objs.createRoomNameInput = $('#createRoomNameInput')[0];
+    objs.pinInput = $('#pinInput')[0];
+
+    $('#goBackButton').click(function() {
+        console.log('click');
+        onGoBack();
+    });
 
     //typeAnimations(options, document.getElementById('joinRoomNameInput'));
     // printLetter("ECE Meeting", document.getElementById('joinRoomNameInput'), 0);
 });
+
+function onGoBack() {
+    console.log('taking you back');
+    window.location.href = "https://roomsforhumanity.org/setup.html";
+}
 
 function onGoToChat() {
     console.log("Attempting to join a room");
@@ -39,12 +45,12 @@ function onGoToChat() {
         if(exists) {
             var pass = pin;
             console.log(pass);
-            if(0 === pass.localeCompare(objs.joinPinInput.value)) {
+            if(0 === pass.localeCompare(objs.pinInput.value)) {
                 var roomname_in = stringToLink(objs.joinRoomNameInput.value);
                 window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
             }
             else {
-                window.location.href = "https://roomsforhumanity.org/pass.html";
+                window.alert("This is not the correct pin for this room!");
             }
         }
         else {
@@ -55,22 +61,6 @@ function onGoToChat() {
 
     
 }
-
-function onCreateRoom() {
-    console.log("Attempting to create a room");
-    var socket = io.connect("https://stream.roomsforhumanity.org");
-    socket.emit('query rooms', "#" + objs.createRoomNameInput.value);
-    socket.on('query response', function(exists, pin) {
-        if(exists) {
-            window.alert("A room with that name already exists!");
-        }
-        else {
-            var roomname_in = stringToLink(objs.createRoomNameInput.value);
-            window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
-        }
-    });
-}
-
 
 ///////////////////////////
 //// TYPING ANIMATIONS ////
