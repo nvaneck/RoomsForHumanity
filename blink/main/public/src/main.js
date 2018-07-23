@@ -71,10 +71,13 @@ $(document).ready(function() {
             $('#remote-video-div').addClass("video-on-chat-open");
         }
     });
-    $('#invitePeopleButton').click(function() {
-        $('#inviteModal').modal('toggle');
-        $('#link-ref').html(function() { return window.location.href });
+    $('#lockRoomButton').click(function() {
+        console.log('I do things');
     });
+    //$('#invitePeopleButton').click(function() {
+    //    $('#inviteModal').modal('toggle');
+    //    $('#link-ref').html(function() { return window.location.href });
+    //});
 
     //window.setInterval(outStats, 60000);
     
