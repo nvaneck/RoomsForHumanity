@@ -116,6 +116,10 @@ io.sockets.on('connection', function(socket) {
         onQuery(socket, roomName);
     });
 
+    socket.on('set pin', function(pin, roomName) {
+        onSetPin(pin, roomName);
+    });
+
 });
 
 /******* SETUP MAIN SERVER CONNECTION *********/
@@ -180,8 +184,8 @@ function onDisconnect(userID, roomName) {
 }
 
 function onJoin(userID, socket, roomName, isPublishing, pin) {
-    console.log("Logging pin");
-    console.log(pin);
+    //console.log("Logging pin");
+    //console.log(pin);
 
     // IF it is a publisher, setup as the broadcaster;
     if (isPublishing === true) {
@@ -480,5 +484,13 @@ function onQuery(socket, roomName) {
             console.log(roomName);
         }
         socket.emit('query response', false, "");
+    }
+}
+
+function onSetPin(pin, roomName) {
+    if(!streamRooms[roomName])
+        console.log('No room with this name exists');
+    else {
+        streamRooms[roomName].pin = pin;
     }
 }

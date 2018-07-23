@@ -74,7 +74,7 @@ $(document).ready(function() {
     $('#lockRoomButton').click(function() {
         pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
         console.log(pin);
-        //setPin(pin);
+        setPin(pin);
     });
     //$('#invitePeopleButton').click(function() {
     //    $('#inviteModal').modal('toggle');
@@ -382,5 +382,6 @@ function listenForNewMessages() {
 
 function setPin(pin) {
     var socket = io.connect("https://stream.roomsforhumanity.org");
-    socket.emit('setPin', pin);
+    console.log(roomName);
+    socket.emit('set pin', pin, roomName);
 }
