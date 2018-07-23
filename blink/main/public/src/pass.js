@@ -49,7 +49,7 @@ function onGoToChat() {
             console.log(pass);
             if(0 === pass.localeCompare(objs.pinInput.value)) {
                 var roomname_in = stringToLink(roomName);
-                window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
+                window.location.href = "https://" + window.location.hostname + "/chat.html" + roomname_in;
             }
             else {
                 window.alert("This is not the correct pin for this room!");
