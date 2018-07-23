@@ -38,6 +38,9 @@ function onGoBack() {
 
 function onGoToChat() {
     var roomName = window.location.hash;
+    if(roomName.charAt(0) === '#') {
+    roomName = roomName.slice(1);
+  }
     console.log(roomName);
     console.log("Attempting to join a room");
     var socket = io.connect("https://stream.roomsforhumanity.org");
@@ -49,7 +52,7 @@ function onGoToChat() {
             console.log(pass);
             if(0 === pass.localeCompare(objs.pinInput.value)) {
                 var roomname_in = stringToLink(roomName);
-                window.location.href = "https://" + window.location.hostname + "/chat.html" + roomname_in;
+                window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
             }
             else {
                 window.alert("This is not the correct pin for this room!");
