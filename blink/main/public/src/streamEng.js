@@ -354,7 +354,9 @@ function logStats(RTCPeerConnection, rating) {
     placeholder = placeholder.slice(1);
     console.log(placeholder);
   }
-  //streamEng.socket.emit('quality', rating, time.toString(), placeholder, user.userID);
+  if(rating !== undefined && rating !== null) {
+    streamEng.socket.emit('quality', rating, time.toString(), placeholder, user.userID);
+  }
     try {
       //Chrome
       rtcPeerconn.getStats(function callback(report) {
