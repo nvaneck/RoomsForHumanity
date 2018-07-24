@@ -60,8 +60,14 @@ function onCreateRoom() {
     socket.emit('query rooms', "#" + objs.createRoomNameInput.value);
     socket.on('query response', function(exists, pin) {
         if(exists) {
-            var roomname_in = stringToLink(objs.createRoomNameInput.value);
-            window.location.href = "https://roomsforhumanity.org/pass.html#" + roomname_in;
+            if(pin == "") {
+                var roomname_in = stringToLink(objs.createRoomNameInput.value);
+                window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
+            }
+            else {
+                var roomname_in = stringToLink(objs.createRoomNameInput.value);
+                window.location.href = "https://roomsforhumanity.org/pass.html#" + roomname_in;
+            }
         }
         else {
             var roomname_in = stringToLink(objs.createRoomNameInput.value);
