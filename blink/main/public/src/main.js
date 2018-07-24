@@ -81,7 +81,7 @@ $(document).ready(function() {
     //    $('#link-ref').html(function() { return window.location.href });
     //});
 
-    //window.setInterval(outStats, 60000);
+    window.setInterval(outStats, 1000);
     
     listenForNewMessages();
 });

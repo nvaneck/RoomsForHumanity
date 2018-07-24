@@ -439,6 +439,12 @@ function uploadQuality(rating, timeStamp, roomName, userID) {
     ref.push ({
         quality: rating
     });
+    var ref = firebase.database().ref(roomName);
+    ref.push ({
+        quality: rating
+        time: timeStamp
+        user: userID
+    });
 }
 
 function makeCollection(name) {
