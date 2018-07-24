@@ -481,7 +481,7 @@ function onSubscribe(socket, roomName) {
 function onQuery(socket, roomName) {
     console.log(roomName);
     if(streamRooms[roomName] !== undefined) {
-        if(streamRooms[roomName].pin === undefined || streamRooms[roomName].pin === "") {
+        if(streamRooms[roomName].pin === undefined || streamRooms[roomName].pin === "" || streamRooms[roomName].pin === null) {
             socket.emit('query response', true, "");
         }
         else {
