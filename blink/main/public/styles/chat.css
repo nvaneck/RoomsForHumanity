@@ -331,3 +331,10 @@ h5 {
 .close:hover {
   color: white;
 }
+
+#lockRoomButton {
+  background-image: url("public/img/unlocked.png");
+  background-size: 30px 30px;
+  height: 40px;
+  width: 40px;
+}
