@@ -338,3 +338,23 @@ h5 {
   height: 30px;
   width: 30px;
 }
+
+#goButton {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#pinInput {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.jumbotron h1 {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.jumbotron p {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.navbar .nav > li > a, .navbar .nav > li > a:first-letter, .navbar .nav > li.current-menu-item > a, .navbar .nav > li.current-menu-ancestor > a {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
