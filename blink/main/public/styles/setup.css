@@ -355,6 +355,6 @@ h5 {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.navbar-default .navbar-fnt {
+.navbar .nav > li > a, .navbar .nav > li > a:first-letter, .navbar .nav > li.current-menu-item > a, .navbar .nav > li.current-menu-ancestor > a {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
