@@ -53,7 +53,8 @@ var numPublishers = 0;
 
 streamEng.setupService = function() {
   //Check as early as possible if the browser is Firefox
-  if (DetectRTC.browser.name === 'Firefox') {
+  //For the moment, this is a hack since currently only Firefox will return true
+  if (!!navigator.mediaDevices.getSupportedConstraints().mediaSource) {
     connection.mediaConstraints = {
         audio: true,
         video: true
