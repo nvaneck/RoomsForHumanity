@@ -1,3 +1,8 @@
+body {
+  font-size: 14px;
+  overflow: hidden;
+}
+
 #createButton {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
