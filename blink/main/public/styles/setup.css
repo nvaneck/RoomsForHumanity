@@ -354,3 +354,7 @@ h5 {
 .jumbotron p {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+.navbar-default .navbar-fnt {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
