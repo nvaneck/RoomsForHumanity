@@ -22,7 +22,17 @@ var peerNumberOf = {
 
 var constraints = {
   video: true,
-  audio: true
+  audio: {
+    mandatory: {
+            echoCancellation: false, // disabling audio processing
+            googAutoGainControl: true,
+            googNoiseSuppression: true,
+            googHighpassFilter: true,
+            googTypingNoiseDetection: true,
+            //googAudioMirroring: true
+        },
+        optional: []
+  }
 };
 
 //var MongoClient = require('mongodb').MongoClient;
@@ -42,6 +52,13 @@ var streamEng = {
 var numPublishers = 0;
 
 streamEng.setupService = function() {
+  //Check as early as possible if the browser is Firefox
+  if (DetectRTC.browser.name === 'Firefox') {
+    connection.mediaConstraints = {
+        audio: true,
+        video: true
+    };
+}
   streamEng.subscribe();
 };
 
