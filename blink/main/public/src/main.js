@@ -146,7 +146,6 @@ function setupSocket() {
 
   streamEng.onDeletePublisher = function(videoIndex) {
     removeVideo(videoIndex);
-  }
 }
 
 //Hides Video when one is clicked
