@@ -22,17 +22,7 @@ var peerNumberOf = {
 
 var constraints = {
   video: true,
-  audio: {
-    mandatory: {
-            echoCancellation: false, // disabling audio processing
-            googAutoGainControl: true,
-            googNoiseSuppression: true,
-            googHighpassFilter: true,
-            googTypingNoiseDetection: true,
-            //googAudioMirroring: true
-        },
-        optional: []
-  }
+  audio: true
 };
 
 //var MongoClient = require('mongodb').MongoClient;
@@ -52,14 +42,6 @@ var streamEng = {
 var numPublishers = 0;
 
 streamEng.setupService = function() {
-  //Check as early as possible if the browser is Firefox
-  //For the moment, this is a hack since currently only Firefox will return true
-  if (!!navigator.mediaDevices.getSupportedConstraints().mediaSource) {
-    connection.mediaConstraints = {
-        audio: true,
-        video: true
-    };
-}
   streamEng.subscribe();
 };
 
@@ -70,44 +52,29 @@ streamEng.publish = function() {
     }
   });
   setupMediaStream(false);
-  streamEng.socket.emit('publish rooms', roomName);
-  streamEng.socket.on('publish response', function(roomExists, passcode) {
-    if(!roomExists) {
-      //pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
-      //console.log("Logging pin");
-      //console.log(pin);
-      pin = "";
-    }
-    else {
-      pin = passcode;
-    }
+  // streamEng.socket.emit('publish rooms', roomName);
+  // streamEng.socket.on('publish response', function(roomExists, passcode) {
+  //   if(!roomExists) {
+  //     //pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
+  //     //console.log("Logging pin");
+  //     //console.log(pin);
+  //     pin = "";
+  //   }
+  //   else {
+  //     pin = passcode;
+  //   }
+    pin = "";
     streamEng.socket.emit('publish', user.userID, roomName, pin);
     user.isPublished = true;
     console.log("Publishing");
-  });
+  // });
 };
 
 streamEng.subscribe = function() {
   setupPage();
   streamEng.socket = io.connect(streamEng.serviceAddress);
   console.log("Connected to Stream Server", streamEng.serviceAddress, roomName);
-
-  // $('#publishButton').click(function() {
-    //   streamEng.publish();
-    // });
-
-  streamEng.socket.emit('subscribe rooms', roomName);
-  streamEng.socket.on('subscribe response', function(roomExists, passcode) {
-    if(!roomExists) {
-      //pin = prompt("Please enter a pin to protect your room", "e.g. 94827");
-      //console.log("Logging pin");
-      //console.log(pin);
-      pin = "";
-    }
-    else {
-      pin = passcode;
-    }
-
+  pin = "";
   streamEng.socket.emit('subscribe', user.userID, roomName, pin);
 
   // When it receives a subscriber ready message, add user to peers (only publishers get subscriber ready msg's)
@@ -194,7 +161,7 @@ streamEng.subscribe = function() {
     if (typeof streamEng.onSubscribeDone !== "undefined") {
         streamEng.onSubscribeDone();
     }
-  });
+  // });
 }
 
 
