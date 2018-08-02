@@ -84,6 +84,10 @@ io.sockets.on('connection', function(socket) {
         onJoin(userID, socket, roomName, false, pin);
     });
 
+    socket.on('create collection', function(name) {
+        makeCollection(name);
+    });
+
     socket.on('stats data', function(logs, timeStamp, roomName, userID) {
         uploadStats(logs, timeStamp, roomName, userID);
     });

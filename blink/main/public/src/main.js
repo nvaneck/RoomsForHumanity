@@ -91,10 +91,36 @@ $(document).ready(function() {
 /******* SOCKET ********/
 
 function setupSocket() {
-    user.userID = uuid();
-    streamEng.serviceAdress = "stream.roomsforhumanity.org";
-    streamEng.setupService;
-}
+
+  socket = io.connect();
+  socket.on('created user', function(userID) {
+
+    user.userID = userID;
+      console.log("Connected");
+
+    // Send join stream system Message
+    socket.emit('join service', user.userID, 'stream', roomName);
+  });
+
+  socket.on('joined service', function(userID, serviceType, serviceAddress) {
+    var engine = services[serviceType];
+    engine.serviceAddress = serviceAddress;
+
+    engine.setupService();
+  });
+
+  socket.on('chat message', function(message, fromUser) {
+      var msg = {
+          fromUser: fromUser,
+          message: message
+      };
+
+      addMessageToChatBox(msg);
+  });
+
+  // streamEng.onSubscribeDone = function() {
+  //     streamEng.publish();
+  // };
 
   streamEng.onPublish = function(stream) {
 
@@ -235,6 +261,79 @@ function removeItemFromArray(array, item) {
     array.splice(index, 1);
   }
 }
+
+function addUsersToInviteModal(users) {
+    for (username in users) {
+        var user = users[username];
+
+        var html = "<div class=\"row userRow centering\">" +
+            "<img class=\"userImg\" src=\"/img/" + user.img + "\"/>" +
+            "<p class=\"userName\">" + user.name + "</p>" +
+            "<button class=\"btn btn-secondary inviteBtn\" id=\"" + user.name.split(' ')[0] + "\"onclick=\"sendInviteTo(\'" + user.name + "\')\">Invite</button>" +
+            "</div>";
+
+        $('#users').append(html);
+    }
+}
+function sendInviteTo(name) {
+    var split_str = name.split(' ');
+    var username = split_str[0];
+    console.log("Sending invite to", name, "at", ECE_faculty[username]);
+    socket.emit('send invite', name, ECE_faculty[username].email, window.location.href);
+    var button = $('#'+name.split(' ')[0]);
+    button.html(function() {
+        return "<img src=\"img/check.png\" style=\"width: 30px\"/>"
+    });
+    button.attr("disabled", "true");
+
+}
+const ECE_faculty = {
+    'Sid': {
+        name: 'Sid Ahuja',
+        email: 'sid@blinkcdn.com',
+        img: 'sid.jpg'
+    },
+    'Mukund': {
+        name: 'Mukund Iyengar',
+        email: 'mukund@blinkcdn.com',
+        img: 'mukund.jpg'
+    },
+    'Charles': {
+        name: 'Charles Bethin',
+        email: 'charles@blinkcdn.com',
+        img: 'charles.jpeg'
+    },
+    'Justin': {
+        name: 'Justin Trugman',
+        email: 'justin@blinkcdn.com',
+        img: 'justin.jpg'
+    },
+    'Sushant': {
+        name: 'Sushant Mongia',
+        email: 'sushantmongia@gmail.com',
+        img: 'sushant.jpg'
+    },
+    'Vrushali': {
+        name: 'Vrushali Gaikwad',
+        email: 'vrushaligaikwad9@gmail.com',
+        img: 'blink.png'
+    },
+    'Yu': {
+        name: 'Yu Zhang',
+        email: 'memo40k@outlook.com',
+        img: 'zhang.jpg'
+    },
+    'Nathan': {
+        name: 'Nathan Van Eck',
+        email: 'natvaneck@gmail.com',
+        img: 'blink.png'
+    },
+    'Test': {
+        name: 'Test',
+        email: 'justin@blinkcdn.com',
+        img: 'blink.png'
+    }
+};
 
 /****** MESSAGES **********/
 
