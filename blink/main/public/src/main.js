@@ -31,6 +31,8 @@ var hiddenVideos = [];
 
 $(document).ready(function() {
 
+    addUsersToInviteModal(ECE_faculty);
+
     // Setup Socket;
     setupSocket();
     user.name = 'user';
