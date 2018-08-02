@@ -90,7 +90,7 @@ $(document).ready(function() {
 function setupSocket() {
     user.userID = uuid();
     streamEng.serviceAdress = "stream.roomsforhumanity.org";
-    streamEng.setupService();
+    streamEng.setupService;
 }
 
   streamEng.onPublish = function(stream) {
