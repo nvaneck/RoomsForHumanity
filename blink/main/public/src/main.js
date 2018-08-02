@@ -30,6 +30,7 @@ var activeVideos = [];
 var hiddenVideos = [];
 
 $(document).ready(function() {
+
     // Setup Socket;
     setupSocket();
     user.name = 'user';
@@ -281,12 +282,4 @@ function setPin(pin) {
     var socket = io.connect("https://stream.roomsforhumanity.org");
     console.log(roomName);
     socket.emit('set pin', pin, roomName);
-}
-
-function uuid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
