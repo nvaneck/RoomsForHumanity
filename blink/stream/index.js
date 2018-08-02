@@ -4,14 +4,11 @@
 const HTTPS_PORT = 8443;
 const MAIN_SERVER_ADDR = "http://roomsforhumanity.org:8080";
 const STREAM_SERVER_ADDR = "https://stream.roomsforhumanity.org";
-//const url = "mongodb://stream:enter1234@52.15.79.228:27017/RoomsStats";
-//const url = "mongodb://localhost:27017"
 
 const express = require('express');
 const https = require('https');
 const socketIO = require('socket.io');
 const fs = require('fs');
-//const MongoClient = require('mongodb').MongoClient;
 const firebase = require('firebase');
 
 /******** OBJECTS ***********/
@@ -19,7 +16,6 @@ const firebase = require('firebase');
 // Rooms
 let streamRooms = {};
 let sockets = {};
-// setupMongoCollection();
 // retreiveStreamRoomData();
 
 var config = {
@@ -32,17 +28,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-
-/************ DELETE OLD DATA ***********/
-//var ref = firebase.database().ref();
-//var now = Date.now();
-//var cutoff = now - 1000 * 60 * 60 * 2;
-//var old = ref.orderByChild('timestamp').endAt(cutoff).limitToLast(1);
-//var listener = old.on('child_added', function(snapshot) {
-//    snapshot.ref.remove();
-//});
-//console.log(firebase);
-
 /************  SERVER SETUP *************/
 
 const certOptions = {
@@ -53,15 +38,7 @@ const certOptions = {
 let app = express();
 let httpsServer = https.Server(certOptions, app);
 httpsServer.listen(HTTPS_PORT);
-//httpsServer.listen(8080);
-//httpsServer.listen(8443);
 let io = socketIO.listen(httpsServer);
-
-// let fileServer = new(nodeStatic.Server)();
-// let app = https.createServer(certOptions, function(req, res) {
-//     fileServer.serve(req, res);
-// }).listen(HTTPS_PORT);
-// let io = socketIO.listen(app);
 console.log("Connected.");
 
 io.sockets.on('connection', function(socket) {
@@ -177,10 +154,12 @@ function onDisconnect(userID, roomName) {
                 // clientsInRoom[clientID].socket.emit('disconnect user', userID, roomName);
                 sockets[clientID].emit('disconnect user', userID, roomName);
             }
+
+            if(length(streamRooms[roomName].clients == 0)) {
+                delete streamRooms[roomName];
+            }
         }
     }
-
-    saveStreamRoomData(streamRooms);
 }
 
 function onJoin(userID, socket, roomName, isPublishing, pin) {
