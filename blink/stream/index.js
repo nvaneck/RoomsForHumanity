@@ -155,7 +155,7 @@ function onDisconnect(userID, roomName) {
                 sockets[clientID].emit('disconnect user', userID, roomName);
             }
 
-            if(length(streamRooms[roomName].clients == 0)) {
+            if(length(streamRooms[roomName].clients) == 0) {
                 delete streamRooms[roomName];
             }
         }
