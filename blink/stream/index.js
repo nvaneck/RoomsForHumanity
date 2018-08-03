@@ -139,7 +139,7 @@ function onDisconnect(userID, roomName) {
     if(streamRooms[roomName]) {
         //let clientsInRoom = streamRooms[roomName].clients;
         let numClients = 0;
-        for(client in streamrooms[roomName].clients) {
+        for(client in streamRooms[roomName].clients) {
             numClients = numClients + 1;
         }
         console.log(numClients + "clients in the room.");
