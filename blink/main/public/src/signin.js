@@ -30,30 +30,6 @@ $(document).ready(function() {
     // printLetter("ECE Meeting", document.getElementById('joinRoomNameInput'), 0);
 });
 
-function onGoToChat() {
-    console.log("Attempting to join a room");
-    var socket = io.connect("https://stream.roomsforhumanity.org");
-    socket.emit('query rooms', "#" + objs.joinRoomNameInput.value);
-    socket.on('query response', function(exists, pin) {
-        console.log(pin);
-        if(exists) {
-            var pass = pin;
-            console.log(pass);
-            if(0 === pass.localeCompare(objs.joinPinInput.value)) {
-                var roomname_in = stringToLink(objs.joinRoomNameInput.value);
-                window.location.href = "https://" + window.location.hostname + "/chat.html#" + roomname_in;
-            }
-            else {
-                window.alert("This is not the correct pin for this room!");
-            }
-        }
-        else {
-            window.alert("There are no rooms with this name!");
-        }
-    });
-    // console.log("https://" + window.location.hostname);
-}
-
 function onCreateRoom() {
     console.log("Attempting to create a room");
     var socket = io.connect("https://stream.roomsforhumanity.org");
