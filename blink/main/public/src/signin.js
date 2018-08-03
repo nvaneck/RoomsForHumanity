@@ -17,13 +17,8 @@ var objs = {
 $(document).ready(function() {
     console.log("Ready.");
 
-    objs.goButton = $('#goButton');
-    objs.goButton.on('click', onGoToChat);
     objs.createButton = $('#createButton');
     objs.createButton.on('click', onCreateRoom);
-
-    objs.joinRoomNameInput = $('#joinRoomNameInput')[0];
-    objs.joinPinInput = $('#joinPinInput')[0];
     objs.createRoomNameInput = $('#createRoomNameInput')[0];
 
     //typeAnimations(options, document.getElementById('joinRoomNameInput'));
