@@ -138,11 +138,14 @@ function onDisconnect(userID, roomName) {
 
     if(streamRooms[roomName]) {
         //let clientsInRoom = streamRooms[roomName].clients;
-        let clientsInRoom = Object.keys(streamRooms[roomName].clients).length;
-        console.log(clientsInRoom.length + "clients in the room.");
+        let numClients = 0;
+        for(client in streamrooms[roomName].clients) {
+            numClients = numClients + 1;
+        }
+        console.log(numClients + "clients in the room.");
 
         // if (clientsInRoom.length === 1 || clientsInRoom.length === undefined) {
-        if(clientsInRoom === 1) {
+        if(numClients === 1) {
             console.log("Attempting to delete the room #1");
             streamRooms[roomName] = null;
             delete streamRooms[roomName];
