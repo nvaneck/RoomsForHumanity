@@ -137,12 +137,12 @@ function onDisconnect(userID, roomName) {
     console.log(userID, "Disconnecting");
 
     if(streamRooms[roomName]) {
-        //let clientsInRoom = streamRooms[roomName].clients;
+        let clientsInRoom = streamRooms[roomName].clients;
         let numClients = 0;
         for(client in streamRooms[roomName].clients) {
             numClients = numClients + 1;
         }
-        console.log(numClients + "clients in the room.");
+        console.log(numClients + " clients in the room.");
 
         // if (clientsInRoom.length === 1 || clientsInRoom.length === undefined) {
         if(numClients === 1) {
