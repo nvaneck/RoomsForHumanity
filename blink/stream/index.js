@@ -138,6 +138,7 @@ function onDisconnect(userID, roomName) {
 
     if(streamRooms[roomName]) {
         let clientsInRoom = streamRooms[roomName].clients;
+        console.log(clientsInRoom.length + "clients in the room.");
 
         if (clientsInRoom.length === 1) {
             console.log("Attempting to delete the room #1");
@@ -148,6 +149,7 @@ function onDisconnect(userID, roomName) {
 
         else {
             // Remove Client from room
+            console.log("Removing user from room");
             delete streamRooms[roomName].clients[userID];
 
             // Let everyone know
