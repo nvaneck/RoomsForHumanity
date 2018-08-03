@@ -225,7 +225,6 @@ function onJoin(userID, socket, roomName, isPublishing, pin) {
         }
 
         console.log("Streamer joined the session:", roomName);
-        saveStreamRoomData(streamRooms);
         return;
     }
 
@@ -269,90 +268,36 @@ function onJoin(userID, socket, roomName, isPublishing, pin) {
                 socket.emit('publisher ready', clientID, client.publisherNumber);
             }
         }
-
-        saveStreamRoomData(streamRooms)
     }
 }
 
-function saveStreamRoomData(room_data) {
-    // // Connect to database and saves streamrooms object
-    // var MongoClient = require('mongodb').MongoClient;
-    // var url = "mongodb://localhost:27017/";
-    //
-    // MongoClient.connect(url, function (err, db) {
-    //     if (err) {
-    //         console.log("Connect Err:", err);
-    //     }
-    //     var dbo = db.db("mydb");
-    //     var myobj = {stream_room: JSON.stringify(streamRooms)};
-    //
-    //     dbo.collection("stream_rooms").insertOne(myobj, function (err, res) {
-    //         if (err) {
-    //             console.log("Insert Err:", err);
-    //         } else {
-    //             console.log("Stream rooms saved.");
-    //         }
-    //         db.close();
-    //     });
-    // });
-}
+// function retreiveStreamRoomData() {
+//     console.log("retreiveStreamRoomData");
+//     // Queries database for streamRoom
+//     var MongoClient = require('mongodb').MongoClient;
+//     var url = "mongodb://localhost:27017/";
 
-function retreiveStreamRoomData() {
-    console.log("retreiveStreamRoomData");
-    // Queries database for streamRoom
-    var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://localhost:27017/";
-
-    MongoClient.connect(url, function (err, db) {
-        if (err) throw err;
-        var dbo = db.db("mydb");
-        var query = { stream_room: { $exists: true } };
-        // dbo.collection("stream").find(query).toArray()
-        var cursor = dbo.collection("stream").find();
-        cursor.forEach(function(err, item) {
-            if(!err) {
-                console.log(items);
-            } else {
-                console.log(err);
-            }
-        });
-        console.log("-------");
-        console.log(cursor);
-        console.log("-------");
-        console.log("Got em");
-    });
-}
-
-function setupMongoCollection() {
-    // Setup Mongo
-    console.log("setupMongoCollection");
-    var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://localhost:27017/";
-    MongoClient.connect(url, function (err, db) {
-        if (err) {
-            console.log("Connect Err:", err);
-        }
-        var dbo = db.db("mydb");
-        dbo.createCollection("stream_rooms", function (err, res) {
-            if (err) {
-                console.log("Create Collection Error:", err);
-            } else {
-                console.log("Created collection");
-            }
-        });
-    });
-}
-
-// function stringifyStreamRoom(room_data) {
-//     var newStreamRoom = Object.assign({}, room_data);
-//     for (roomName in newStreamRoom) {
-//         for (clientID in newStreamRoom[roomName].clients) {
-//             newStreamRoom[roomName].clients[clientID].socket = undefined;
-//         }
-//     }
-//
-//     return JSON.stringify(newStreamRoom);
+//     MongoClient.connect(url, function (err, db) {
+//         if (err) throw err;
+//         var dbo = db.db("mydb");
+//         var query = { stream_room: { $exists: true } };
+//         // dbo.collection("stream").find(query).toArray()
+//         var cursor = dbo.collection("stream").find();
+//         cursor.forEach(function(err, item) {
+//             if(!err) {
+//                 console.log(items);
+//             } else {
+//                 console.log(err);
+//             }
+//         });
+//         console.log("-------");
+//         console.log(cursor);
+//         console.log("-------");
+//         console.log("Got em");
+//     });
 // }
+
+// 
 
 function uploadStats(logs, timeStamp, roomName, userID) {
     console.log("uploadStats");
